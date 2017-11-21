@@ -2,8 +2,6 @@
 "" Global {{{
 " don"t want that good ol' Vi
 set nocompatible 
-" include colorschemes
-set runtimepath+=$HOME/colors
 " enable syntax
 syntax on
 " modern using of backspace in insert mode
@@ -263,19 +261,18 @@ augroup end
 "" }}}
 " Look {{{
 if has('gui')
-	set guifont=Lucida\ Console
-	autocmd FileType vim highlight Normal guifg=#1A1B37
-	autocmd FileType vim highlight vimHighlight gui=bold guifg=#DFC932
-	autocmd FileType vim highlight vimMap guifg=#133A44
-	autocmd FileType vim highlight vimAugroupKey gui=bold guifg=#133A44
-	autocmd FileType vim highlight vimAutocmd guifg=#234154
-	autocmd FileType vim highlight vimIsCommand guifg=#537A74
-	autocmd FileType vim highlight vimAutoCmdSfxList guifg=#537A74
-	autocmd FileType vim highlight vimOper guifg=#000000
-	autocmd FileType vim highlight vimHiGroup guifg=#000000
+	set guifont=Courier\ New:h12
+	"autocmd FileType vim highlight Normal guifg=#1A1B37
+	"autocmd FileType vim highlight vimHighlight gui=bold guifg=#DFC932
+	"autocmd FileType vim highlight vimMap guifg=#133A44
+	"autocmd FileType vim highlight vimAugroupKey gui=bold guifg=#133A44
+	"autocmd FileType vim highlight vimAutocmd guifg=#234154
+	"autocmd FileType vim highlight vimIsCommand guifg=#537A74
+	"autocmd FileType vim highlight vimAutoCmdSfxList guifg=#537A74
+	"autocmd FileType vim highlight vimOper guifg=#000000
+	"autocmd FileType vim highlight vimHiGroup guifg=#000000
+	colorscheme twilight
 endif
-set background=dark
-colorscheme twilight
 " }}}
 """ Imported {{{
 "" Show syntax highlighting groups for word under cursor {{{
