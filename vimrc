@@ -1,60 +1,40 @@
 """ Options {{{
 "" Global {{{
+" don"t want that good ol' Vi
 set nocompatible 
-
+" include colorschemes
+set runtimepath+=$HOME/colors
+" enable syntax
 syntax on
-
 " modern using of backspace in insert mode
 set backspace=indent,eol,start
-
 " line numbering
 set relativenumber numberwidth=4
-
 " history size
 set history=100
-
 " always show status line
 set laststatus=2
-
+" don't want no ~* files
 set nobackup
+" don't want no *.sw* files
 set noswapfile
-
-" display line number in insert mode {{{
-augroup insert_group
-	autocmd!
-	autocmd InsertEnter * setlocal norelativenumber number cursorcolumn
-	autocmd InsertLeave * setlocal relativenumber nonumber nocursorcolumn
-augroup END
-" }}}
+if has('gui')
+" no gui options
+	set guioptions=
+endif
 "" }}}
 "" Filetype specific {{{
 let maplocalleader=';'
-" help {{{
-augroup filetype_help
-	autocmd!
-	autocmd Filetype help nnoremap <buffer> <localleader>?k :cprev<CR>
-	autocmd Filetype help nnoremap <buffer> <localleader>?j :cnext<CR>
-augroup END
-" }}}
 " markdown {{{
 augroup filetype_markdown
 	autocmd!
 	autocmd BufNewFile *.txt :write
-	" Inside header block delimited by =
-	autocmd FileType markdown onoremap <buffer> ih1 :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rkvg_"<cr>
-	" Around header block delimited by =
-	autocmd FileType markdown onoremap <buffer> ah1 :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rg_vk0"<cr>
-	" Inside subheader block delimited by -
-	autocmd FileType markdown onoremap <buffer> ih2 :<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rkvg_"<cr>
-	" Around header block delimited by -
-	autocmd FileType markdown onoremap <buffer> ah1 :<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rg_vk0"<cr>
 augroup END
 " }}}
 " vim {{{
 augroup filetype_vim
 
 	autocmd!
-	autocmd FileType vim inoremap <buffer> fun~ function ()<Return>endfunction:normal k
 	autocmd Filetype vim setlocal textwidth=90
 	autocmd FileType vim setlocal wrap
 	autocmd FileType vim setlocal foldmethod=marker
@@ -76,9 +56,6 @@ augroup filetype_python
 	autocmd!
 	" tabs are trailing spaces are displayed
 	set listchars=tab:>-,trail:-
-	" Comment line
-	autocmd FileType python nnoremap <buffer> <localleader>c I#<space>:normal
-	" PEP 8 tabs
 	autocmd FileType python setlocal tabstop=4 shiftwidth=4 expandtab
 	autocmd FileType python setlocal textwidth=81 
 	autocmd FileType python setlocal wrap 
@@ -90,7 +67,6 @@ augroup END
 " cpp {{{
 augroup filetype_cpp
 	autocmd!
-	autocmd FileType cpp nnoremap <buffer> <localleader>c I//<space>:normal
 	autocmd FileType cpp setlocal nowrap
 	autocmd FileType cpp setlocal cindent
 	" always insert spaces
@@ -99,7 +75,7 @@ augroup END
 " }}}
 "" }}}
 """ }}}
-"" Mappings {{{
+""" Mappings {{{
 let mapleader=','
 " Global {{{
 " select current word in visual mode
@@ -200,7 +176,49 @@ onoremap an{ :<C-u>normal! f{va{<cr>
 onoremap al{ :<C-u>normal! F}va}<cr>
 " }}}
 " }}}
+"" Filetype specific {{{
+" help {{{
+augroup filetype_help_mappings
+	autocmd!
+	autocmd Filetype help nnoremap <buffer> <localleader>?k :cprev<CR>
+	autocmd Filetype help nnoremap <buffer> <localleader>?j :cnext<CR>
+augroup END
+" }}}
+" markdown {{{
+augroup filetype_markdown_mappings
+	autocmd!
+	" Inside header block delimited by =
+	autocmd FileType markdown onoremap <buffer> ih1 :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rkvg_"<cr>
+	" Around header block delimited by =
+	autocmd FileType markdown onoremap <buffer> ah1 :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rg_vk0"<cr>
+	" Inside subheader block delimited by -
+	autocmd FileType markdown onoremap <buffer> ih2 :<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rkvg_"<cr>
+	" Around header block delimited by -
+	autocmd FileType markdown onoremap <buffer> ah1 :<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rg_vk0"<cr>
+augroup END
+" }}}
+" vim {{{
+augroup filetype_vim_mappings
+	autocmd!
+	autocmd FileType vim inoremap <buffer> fun~ function ()<Return>endfunction:normal k
+augroup END
+" }}}
+" python {{{
+augroup filletype_python_mappings
+	autocmd!
+	" Comment line
+	autocmd FileType python nnoremap <buffer> <localleader>c I#<space>:normal
+	" PEP 8 tabs
+augroup END
+" }}}
+" cpp {{{
+augroup filetype_cpp_mappings
+	autocmd!
+	autocmd FileType cpp nnoremap <buffer> <localleader>c I//<space>:normal
+augroup END
+" }}}
 "" }}}
+""" }}}
 """ Statusline {{{
 " absolute filename
 set statusline=%-50F
@@ -244,16 +262,20 @@ augroup end
 " }}}
 "" }}}
 " Look {{{
-set guifont=Lucida\ Console
-autocmd FileType vim highlight Normal guifg=#1A1B37
-autocmd FileType vim highlight vimHighlight gui=bold guifg=#DFC932
-autocmd FileType vim highlight vimMap guifg=#133A44
-autocmd FileType vim highlight vimAugroupKey gui=bold guifg=#133A44
-autocmd FileType vim highlight vimAutocmd guifg=#234154
-autocmd FileType vim highlight vimIsCommand guifg=#537A74
-autocmd FileType vim highlight vimAutoCmdSfxList guifg=#537A74
-autocmd FileType vim highlight vimOper guifg=#000000
-autocmd FileType vim highlight vimHiGroup guifg=#000000
+if has('gui')
+	set guifont=Lucida\ Console
+	autocmd FileType vim highlight Normal guifg=#1A1B37
+	autocmd FileType vim highlight vimHighlight gui=bold guifg=#DFC932
+	autocmd FileType vim highlight vimMap guifg=#133A44
+	autocmd FileType vim highlight vimAugroupKey gui=bold guifg=#133A44
+	autocmd FileType vim highlight vimAutocmd guifg=#234154
+	autocmd FileType vim highlight vimIsCommand guifg=#537A74
+	autocmd FileType vim highlight vimAutoCmdSfxList guifg=#537A74
+	autocmd FileType vim highlight vimOper guifg=#000000
+	autocmd FileType vim highlight vimHiGroup guifg=#000000
+endif
+set background=dark
+colorscheme twilight
 " }}}
 """ Imported {{{
 "" Show syntax highlighting groups for word under cursor {{{
