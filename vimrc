@@ -1,7 +1,8 @@
 """ Options {{{
 "" Global {{{
-" don"t want that good ol' Vi
+" don't want that good ol' Vi
 set nocompatible 
+set runtimepath+=$HOME/vimfiles/plugin
 " enable syntax
 syntax on
 " modern using of backspace in insert mode
@@ -16,6 +17,8 @@ set laststatus=2
 set nobackup
 " don't want no *.sw* files
 set noswapfile
+set nowrap
+set listchars=tab:>-,trail:-
 if has('gui')
 " no gui options
 	set guioptions=
@@ -31,10 +34,10 @@ augroup END
 " }}}
 " vim {{{
 augroup filetype_vim
-
 	autocmd!
+	autocmd FileType vim setlocal list listchars+=tab:\\>
 	autocmd Filetype vim setlocal textwidth=90
-	autocmd FileType vim setlocal wrap
+	autocmd FileType vim setlocal nowrap
 	autocmd FileType vim setlocal foldmethod=marker
 	" Fold every fold at opening
 	autocmd FileType vim setlocal foldlevelstart=0
@@ -53,7 +56,6 @@ augroup END
 augroup filetype_python
 	autocmd!
 	" tabs are trailing spaces are displayed
-	set listchars=tab:>-,trail:-
 	autocmd FileType python setlocal tabstop=4 shiftwidth=4 expandtab
 	autocmd FileType python setlocal textwidth=81 
 	autocmd FileType python setlocal wrap 
@@ -67,6 +69,9 @@ augroup filetype_cpp
 	autocmd!
 	autocmd FileType cpp setlocal nowrap
 	autocmd FileType cpp setlocal cindent
+	autocmd FileType cpp setlocal smarttab
+	autocmd FileType cpp setlocal foldmethod=indent
+	autocmd FileType cpp setlocal foldlevelstart=0
 	" always insert spaces
 	autocmd FileType cpp setlocal tabstop=3 shiftwidth=3 expandtab
 augroup END
@@ -175,6 +180,7 @@ onoremap al{ :<C-u>normal! F}va}<cr>
 " }}}
 " }}}
 "" Filetype specific {{{
+let maplocalleader=;
 " help {{{
 augroup filetype_help_mappings
 	autocmd!
@@ -213,6 +219,7 @@ augroup END
 augroup filetype_cpp_mappings
 	autocmd!
 	autocmd FileType cpp nnoremap <buffer> <localleader>c I//<space>:normal
+	autocmd FileType cpp nnoremap <buffer> <localleader>;l :execute "normal! mqA;\<esc>`q"
 augroup END
 " }}}
 "" }}}
@@ -287,5 +294,10 @@ function! <SID>SynStack()
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 " }}}
+
+"" Fugitive {{{
+let g:fugitive_git_command='C:\Git\bin\git.exe'
+"" }} 
+
 "" }}}
 """ }}}
