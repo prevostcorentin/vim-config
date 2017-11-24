@@ -180,7 +180,6 @@ onoremap al{ :<C-u>normal! F}va}<cr>
 " }}}
 " }}}
 "" Filetype specific {{{
-let maplocalleader=;
 " help {{{
 augroup filetype_help_mappings
 	autocmd!
@@ -208,10 +207,11 @@ augroup filetype_vim_mappings
 augroup END
 " }}}
 " python {{{
-augroup filletype_python_mappings
+augroup filetype_python_mappings
 	autocmd!
 	" Comment line
 	autocmd FileType python nnoremap <buffer> <localleader>c I#<space>:normal
+	autocmd FileType python inoremap <buffer> def<C-k> if :<esc>hi
 	" PEP 8 tabs
 augroup END
 " }}}
@@ -265,6 +265,11 @@ augroup filetype_vim_abbrev
   autocmd!
 augroup end
 " }}}
+" python {{{
+augroup filetype_python_abbrev
+  autocmd!
+augroup end
+" }}}
 "" }}}
 " Look {{{
 if has('gui')
@@ -281,7 +286,7 @@ if has('gui')
 	colorscheme twilight
 endif
 " }}}
-""" Imported {{{
+"""" Imported {{{
 "" Show syntax highlighting groups for word under cursor {{{
 " Mapping {{{
 nmap <C-S-P> :call <SID>SynStack()<CR>
@@ -294,10 +299,20 @@ function! <SID>SynStack()
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 " }}}
-
+"" }}}
 "" Fugitive {{{
 let g:fugitive_git_command='C:\Git\bin\git.exe'
 "" }} 
 
 "" }}}
+""" Filetype Specific {{{
+"" Python {{{
+" pydiction {{{
+augroup pydiction
+	autocmd FileType python let g:pydiction_location=$HOME/vimfiles/autocomplete/dictionary/python
+	autocmd FileType python :source $HOME/vimfiles/autocomplete/python.vim
+augroup END
+" }}}
+"" }}}
 """ }}}
+"""" }}}
