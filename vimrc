@@ -326,6 +326,10 @@ augroup cpp_syntax_highlighting
 augroup END
 " auto
 " }}}
+" autocompletion
+augroup tags_cpp
+	autocmd FileType cpp setlocal tags+=$HOME/vimfiles/autocomplete/tags/cpp
+augroup END
 "" }}}
 """ }}}
 """" }}}
