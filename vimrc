@@ -2,7 +2,8 @@
 "" Global {{{
 " don't want that good ol' Vi
 set nocompatible 
-set runtimepath+=$HOME/vimfiles/plugin,$HOME/vimfiles/after/syntax
+set runtimepath+=$HOME/vimfiles/plugin
+" load filetype plugins
 " enable syntax
 syntax on
 " modern using of backspace in insert mode
@@ -25,7 +26,7 @@ if has('gui')
 endif
 "" }}}
 "" Filetype specific {{{
-let maplocalleader=';'
+filetype plugin on
 " markdown {{{
 augroup filetype_markdown
 	autocmd!
@@ -180,6 +181,7 @@ onoremap al{ :<C-u>normal! F}va}<cr>
 " }}}
 " }}}
 "" Filetype specific {{{
+let maplocalleader=';'
 " help {{{
 augroup filetype_help_mappings
 	autocmd!
@@ -322,6 +324,7 @@ augroup cpp_syntax_highlighting
 	autocmd FileType cpp let g:cpp_class_scope_highlight=1
 	autocmd FileType cpp let g:cpp_class_decl_highlight=1
 augroup END
+" auto
 " }}}
 "" }}}
 """ }}}
