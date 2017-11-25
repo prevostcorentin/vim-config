@@ -97,6 +97,8 @@ noremap <Up> <nop>
 noremap <Down> <nop>
 " }}}
 " Normal {{{
+" navigate through buffers
+nnoremap <F5> :buffers<cr>:buffer
 " move through splits
 nnoremap <A-k> <C-w>k
 nnoremap <A-j> <C-w>j
