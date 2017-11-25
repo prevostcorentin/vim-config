@@ -2,7 +2,7 @@
 "" Global {{{
 " don't want that good ol' Vi
 set nocompatible 
-set runtimepath+=$HOME/vimfiles/plugin
+set runtimepath+=$HOME/vimfiles/plugin,$HOME/vimfiles/after/syntax
 " enable syntax
 syntax on
 " modern using of backspace in insert mode
@@ -306,12 +306,21 @@ let g:fugitive_git_command='C:\Git\bin\git.exe'
 
 "" }}}
 """ Filetype Specific {{{
-"" Python {{{
-" pydiction {{{
+"" python {{{
+" autocompletion {{{
 augroup pydiction
 " https://github.com/rkulla/pydiction
 	autocmd FileType python let g:pydiction_location=$HOME/vimfiles/autocomplete/dictionary/python
 	autocmd FileType python :source $HOME/vimfiles/autocomplete/python.vim
+augroup END
+" }}}
+"" }}}
+"" cpp {{{
+" syntax highlighting {{{
+augroup cpp_syntax_highlighting
+	autocmd FileType cpp let g:cpp_member_variables_highlight=1
+	autocmd FileType cpp let g:cpp_class_scope_highlight=1
+	autocmd FileType cpp let g:cpp_class_decl_highlight=1
 augroup END
 " }}}
 "" }}}
