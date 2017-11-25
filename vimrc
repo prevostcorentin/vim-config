@@ -77,6 +77,12 @@ augroup filetype_cpp
 	autocmd FileType cpp setlocal tabstop=3 shiftwidth=3 expandtab
 augroup END
 " }}}
+" make {{{
+augroup filetype_make
+	autocmd!
+	autocmd Filetype make setlocal tabstop=2 shiftwidth=2
+augroup END
+" }}}
 "" }}}
 """ }}}
 """ Mappings {{{
@@ -312,6 +318,7 @@ let g:fugitive_git_command='C:\Git\bin\git.exe'
 " autocompletion {{{
 augroup pydiction
 " https://github.com/rkulla/pydiction
+	autocmd!
 	autocmd FileType python let g:pydiction_location=$HOME/vimfiles/autocomplete/dictionary/python
 	autocmd FileType python :source $HOME/vimfiles/autocomplete/python.vim
 augroup END
@@ -320,6 +327,7 @@ augroup END
 "" cpp {{{
 " syntax highlighting {{{
 augroup cpp_syntax_highlighting
+	autocmd!
 	autocmd FileType cpp let g:cpp_member_variables_highlight=1
 	autocmd FileType cpp let g:cpp_class_scope_highlight=1
 	autocmd FileType cpp let g:cpp_class_decl_highlight=1
