@@ -140,8 +140,8 @@ nnoremap <C-s>hv :execute "leftabove vnew ".$MYVIMRC<CR>
 nnoremap <C-s>ln :execute "rightbelow vnew ."<CR>
 nnoremap <C-s>hn :execute "leftabove vnew ."<CR>
 " vertical
-nnoremap <C-s>jk :execute "rightbelow new ."<CR>
-nnoremap <C-s>kk :execute "leftabove new ."<CR>
+nnoremap <C-s>jn :execute "rightbelow new ."<CR>
+nnoremap <C-s>kn :execute "leftabove new ."<CR>
 " }}}
 "" }}}
 " source file
