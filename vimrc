@@ -1,8 +1,13 @@
 """ Options {{{
 "" Global {{{
 " don't want that good ol' Vi
-set nocompatible 
+set nocompatible
 set runtimepath+=$HOME/vimfiles/plugin
+if has("multi_byte")
+	set encoding=utf-8
+	setglobal fileencoding=utf-8
+	set fileencodings=ucs-bom,utf-8,latin1
+endif
 " load filetype plugins
 " enable syntax
 syntax on
@@ -19,7 +24,8 @@ set nobackup
 " don't want no *.sw* files
 set noswapfile
 set nowrap
-set listchars=tab:>-,trail:-
+
+set listchars=tab:●►,trail:•
 if has('gui')
 " no gui options
 	set guioptions=
@@ -36,7 +42,7 @@ augroup END
 " vim {{{
 augroup filetype_vim
 	autocmd!
-	autocmd FileType vim setlocal list listchars+=tab:\\>
+	autocmd FileType vim setlocal list listchars=trail:�,tab:>�
 	autocmd Filetype vim setlocal textwidth=90
 	autocmd FileType vim setlocal nowrap
 	autocmd FileType vim setlocal foldmethod=marker
@@ -68,13 +74,14 @@ augroup END
 " cpp {{{
 augroup filetype_cpp
 	autocmd!
+	autocmd FileType cpp setlocal setlocal list listchars+=tab:═╬
 	autocmd FileType cpp setlocal nowrap
 	autocmd FileType cpp setlocal cindent
 	autocmd FileType cpp setlocal smarttab
 	autocmd FileType cpp setlocal foldmethod=indent
 	autocmd FileType cpp setlocal foldlevelstart=0
 	" always insert spaces
-	autocmd FileType cpp setlocal tabstop=3 shiftwidth=3 expandtab
+	autocmd FileType cpp setlocal tabstop=3 shiftwidth=3 noexpandtab
 augroup END
 " }}}
 " make {{{
@@ -283,7 +290,7 @@ augroup end
 "" }}}
 " Look {{{
 if has('gui')
-	set guifont=Courier\ New:h12
+	set guifont=Courier\ New:h14
 	"autocmd FileType vim highlight Normal guifg=#1A1B37
 	"autocmd FileType vim highlight vimHighlight gui=bold guifg=#DFC932
 	"autocmd FileType vim highlight vimMap guifg=#133A44
@@ -293,7 +300,13 @@ if has('gui')
 	"autocmd FileType vim highlight vimAutoCmdSfxList guifg=#537A74
 	"autocmd FileType vim highlight vimOper guifg=#000000
 	"autocmd FileType vim highlight vimHiGroup guifg=#000000
-	colorscheme twilight
+	if has('win32')
+		if &g:background ==# 'dark'
+			colorscheme twilight
+		else
+			colorscheme simpleandfriendly
+		endif
+	endif
 endif
 " }}}
 """" Imported {{{
