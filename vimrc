@@ -104,8 +104,9 @@ augroup END
 " }}}
 "" }}}
 """ }}}
-""" Mappings {{{
-let mapleader=','
+"""" Mappings {{{
+let mapleader = ','
+let $MYVIMRC = $HOME.'\vimfiles\vimrc'
 " Global {{{
 " select current word in visual mode
 noremap <space> viw
@@ -115,7 +116,7 @@ noremap <Right> <nop>
 noremap <Up> <nop>
 noremap <Down> <nop>
 " }}}
-" Normal {{{
+""" Normal {{{
 " navigate through buffers
 nnoremap <F5> :buffers<cr>:buffer
 " move through splits
@@ -125,32 +126,30 @@ nnoremap <A-l> <C-w>l
 nnoremap <A-h> <C-w>h
 " undo 2 changes one at a time
 nnoremap <leader>d "1dd"2dd:let @"=@1<CR>
-" create splits
-" vertical for new buffer
-nnoremap <C-s>jn :execute "rightbelow new ."<CR>
-nnoremap <C-s>kn :execute "leftabove new ."<CR>
-" horizontal for new buffer
+"" create splits {{{
+" $MYVIMRC {{{
+" horizontal
+nnoremap <C-s>jv :execute "rightbelow new ".$MYVIMRC<CR>
+nnoremap <C-s>kv :execute "leftabove new ".$MYVIMRC<CR>
+" vertical
+nnoremap <C-s>lv :execute "rightbelow vnew ".$MYVIMRC<CR>
+nnoremap <C-s>hv :execute "leftabove vnew ".$MYVIMRC<CR>
+" }}}
+" new buffer {{{
+" horizontal
 nnoremap <C-s>ln :execute "rightbelow vnew ."<CR>
 nnoremap <C-s>hn :execute "leftabove vnew ."<CR>
-" vertical for previous buffer
-nnoremap <C-s>jk :execute "rightbelow split " . bufname(bufnr('#')-1)<CR>
-nnoremap <C-s>kk :execute "leftabove split " . bufname(bufnr('#')-1)<CR>
-" horizontal for previous buffer
-nnoremap <C-s>lk :execute "rightabove vsplit " . bufname(bufnr('#')-1)<CR>
-nnoremap <C-s>hk :execute "leftabove vsplit " . bufname(bufnr('#')-1)<CR>
-" vertical for next buffer
-nnoremap <C-s>jj :execute "rightbelow split " . bufname(bufnr('#')+1)<CR>
-nnoremap <C-s>kj :execute "leftabove split " . bufname(bufnr('#')+1)<CR>
-" horizontal for next buffer
-nnoremap <C-s>hj :execute "rightabove vsplit " . bufname(bufnr('#')+1)<CR>
-nnoremap <C-s>lj :execute "leftabove vsplit " . bufname(bufnr('#')+1)<CR>
+" vertical
+nnoremap <C-s>jk :execute "rightbelow new ."<CR>
+nnoremap <C-s>kk :execute "leftabove new ."<CR>
+" }}}
+"" }}}
 " source file
 nnoremap <leader>x :source 
 " edit a file
 nnoremap <leader>o :e 
 " Shortcuts to vimrc file
 nnoremap <leader>xv :source $HOME\vimfiles\vimrc<CR><LF>
-nnoremap <leader>ov :vsplit $HOME\vimfiles\vimrc<CR><LF>
 " go to end of line with Shift-l
 nnoremap L $
 " go to beginning of line with Shift-h
@@ -159,7 +158,7 @@ nnoremap H 0
 nnoremap ! :w<CR>
 " delete line
 nnoremap \ dd
-" }}}
+""" }}}
 " Visual  {{{
 vnoremap <space> e
 " exit visual mode
@@ -212,8 +211,8 @@ let maplocalleader=';'
 " help {{{
 augroup filetype_help_mappings
 	autocmd!
-	autocmd Filetype help nnoremap <buffer> <localleader>?k :cprev<CR>
-	autocmd Filetype help nnoremap <buffer> <localleader>?j :cnext<CR>
+	autocmd Filetype help nnoremap <buffer> <localleader>n :cnext<CR>
+	autocmd Filetype help nnoremap <buffer> <localleader>N :cprev<CR>
 augroup END
 " }}}
 " markdown {{{
@@ -252,7 +251,7 @@ augroup filetype_cpp_mappings
 augroup END
 " }}}
 "" }}}
-""" }}}
+"""" }}}
 """ Statusline {{{
 " absolute filename
 set statusline=%-50F
