@@ -343,10 +343,10 @@ let g:fugitive_git_command='C:\Git\bin\git.exe'
 """ Filetype Specific {{{
 "" python {{{
 " autocompletion {{{
+let g:pydiction_location = $HOME."/vimfiles/autocomplete/dictionary/python"
 augroup pydiction
 " https://github.com/rkulla/pydiction
 	autocmd!
-	autocmd FileType python let g:pydiction_location=$HOME/vimfiles/autocomplete/dictionary/python
 	autocmd FileType python :source $HOME/vimfiles/autocomplete/python.vim
 augroup END
 " }}}
