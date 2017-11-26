@@ -74,7 +74,7 @@ augroup END
 augroup filetype_python
 	autocmd!
 	" tabs are trailing spaces are displayed
-	autocmd FileType cpp setlocal list
+	autocmd FileType python setlocal list
 	autocmd FileType python setlocal tabstop=4 shiftwidth=4 expandtab
 	autocmd FileType python setlocal textwidth=81 
 	autocmd FileType python setlocal wrap 
