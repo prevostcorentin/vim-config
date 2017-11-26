@@ -3,12 +3,6 @@
 " don't want that good ol' Vi
 set nocompatible
 set runtimepath+=$HOME/vimfiles/plugin
-if has("multi_byte")
-	set encoding=utf-8
-	setglobal fileencoding=utf-8
-	set fileencodings=ucs-bom,utf-8,latin1
-endif
-" load filetype plugins
 " enable syntax
 syntax on
 " modern using of backspace in insert mode
@@ -25,24 +19,41 @@ set nobackup
 set noswapfile
 set nowrap
 
-set listchars=tab:●►,trail:•
+" set file encoding to utf-8 if possible
+if has("multi_byte")
+	set encoding=utf-8
+	setglobal fileencoding=utf-8
+	set fileencodings=utf-8,latin1
+end
+
+set listchars=tab:►\ ,trail:●
+
 if has('gui')
 " no gui options
 	set guioptions=
 endif
+" auto commands {{{
+augroup number_when_inserting
+	autocmd!
+	autocmd InsertEnter setlocal norelativenumber number
+	autocmd InsertLeave setlocal relativenumber nonumber
+augroup END
+" }}}
 "" }}}
 "" Filetype specific {{{
 filetype plugin on
 " markdown {{{
 augroup filetype_markdown
 	autocmd!
+	autocmd Filetype vim setlocal list listchars=tab:►\ ,trail:●
 	autocmd BufNewFile *.txt :write
 augroup END
 " }}}
 " vim {{{
 augroup filetype_vim
-	autocmd!
-	autocmd FileType vim setlocal list listchars=trail:�,tab:>�
+	autocmd! 
+	" autocmd Filetype vim setlocal list listchars=tab:►\ ,trail:●
+	autocmd Filetype vim setlocal nolist
 	autocmd Filetype vim setlocal textwidth=90
 	autocmd FileType vim setlocal nowrap
 	autocmd FileType vim setlocal foldmethod=marker
@@ -63,10 +74,10 @@ augroup END
 augroup filetype_python
 	autocmd!
 	" tabs are trailing spaces are displayed
+	autocmd FileType cpp setlocal list
 	autocmd FileType python setlocal tabstop=4 shiftwidth=4 expandtab
 	autocmd FileType python setlocal textwidth=81 
 	autocmd FileType python setlocal wrap 
-	autocmd FileType python setlocal list
 	autocmd FileType python setlocal cindent
 	autocmd FileType python :iabbrev <buffer> iff if:<left>
 augroup END
@@ -74,13 +85,14 @@ augroup END
 " cpp {{{
 augroup filetype_cpp
 	autocmd!
-	autocmd FileType cpp setlocal setlocal list listchars+=tab:═╬
+	autocmd FileType cpp setlocal listchars=tab:╬═,trail:●
+	autocmd FileType cpp setlocal list
 	autocmd FileType cpp setlocal nowrap
 	autocmd FileType cpp setlocal cindent
 	autocmd FileType cpp setlocal smarttab
 	autocmd FileType cpp setlocal foldmethod=indent
 	autocmd FileType cpp setlocal foldlevelstart=0
-	" always insert spaces
+	" insert tabs and display it as 3 spaces wide
 	autocmd FileType cpp setlocal tabstop=3 shiftwidth=3 noexpandtab
 augroup END
 " }}}
