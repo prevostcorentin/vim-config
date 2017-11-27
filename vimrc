@@ -5,6 +5,8 @@ set nocompatible
 set runtimepath+=$HOME/vimfiles/plugin
 " enable syntax
 syntax on
+" enable per project configuration
+set exrc
 " modern using of backspace in insert mode
 set backspace=indent,eol,start
 " line numbering
@@ -362,6 +364,7 @@ augroup END
 " }}}
 " autocompletion
 augroup tags_cpp
+	autocmd FileType cpp setlocal tags+=$HOME/vimfiles/autocomplete/tags/cpp
 	autocmd FileType cpp setlocal tags+=$HOME/vimfiles/autocomplete/tags/cpp
 augroup END
 "" }}}
