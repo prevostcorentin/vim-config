@@ -115,6 +115,7 @@ noremap <Left> <nop>
 noremap <Right> <nop>
 noremap <Up> <nop>
 noremap <Down> <nop>
+noremap <C-s> <nop>
 " }}}
 """ Normal {{{
 " navigate through buffers
@@ -149,7 +150,7 @@ nnoremap <leader>x :source
 " edit a file
 nnoremap <leader>o :e 
 " Shortcuts to vimrc file
-nnoremap <leader>xv :source $HOME\vimfiles\vimrc<CR><LF>
+nnoremap <leader>xv :source $HOME/.vim/vimrc<CR><LF>
 " go to end of line with Shift-l
 nnoremap L $
 " go to beginning of line with Shift-h
@@ -179,8 +180,6 @@ inoremap <C-j> <esc>ddpi
 inoremap <C-k> <esc>kddpki
 " exit
 inoremap jk <esc>
-" unmap default exit
-inoremap <esc> <nop>
 " }}}
 " Pending  {{{
 onoremap p i(
@@ -311,13 +310,11 @@ if has('gui')
 	"autocmd FileType vim highlight vimAutoCmdSfxList guifg=#537A74
 	"autocmd FileType vim highlight vimOper guifg=#000000
 	"autocmd FileType vim highlight vimHiGroup guifg=#000000
-	if has('win32')
-		if &g:background ==# 'dark'
-			colorscheme twilight
-		else
-			colorscheme simpleandfriendly
-		endif
-	endif
+endif
+if &g:background ==# 'dark'
+	colorscheme twilight
+else
+	colorscheme simpleandfriendly
 endif
 " }}}
 """" Imported {{{
