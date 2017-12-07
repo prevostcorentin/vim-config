@@ -2,6 +2,7 @@
 "" Global {{{
 " don't want that good ol' Vi
 set nocompatible
+" enable plugins
 set runtimepath+=$HOME/vimfiles/plugin
 " enable syntax
 syntax on
@@ -15,11 +16,21 @@ set relativenumber numberwidth=4
 set history=100
 " always show status line
 set laststatus=2
-" don't want no ~* files
-set nobackup
-" don't want no *.sw* files
-set noswapfile
+" Annoying backup files {{{
+set backup
+set backupdir=$HOME/vimfiles/backup
+" }}}
+" Annoying swap files {{{
+set swapfile
+set directory=$HOME/vimfiles/swap
+" }}}
+
 set nowrap
+
+" Search {{{
+set incsearch
+set hlsearch
+" }}}
 
 " set file encoding to utf-8 if possible
 if has("multi_byte")
@@ -337,7 +348,7 @@ endfunc
 " }}}
 "" }}}
 "" Fugitive {{{
-let g:fugitive_git_command='C:\Git\bin\git.exe'
+let g:fugitive_git_command='git'
 "" }}}
 """ Filetype Specific {{{
 "" python {{{
