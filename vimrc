@@ -78,7 +78,7 @@ augroup filetype_python
 	" tabs are trailing spaces are displayed
 	autocmd FileType python setlocal list
 	autocmd FileType python setlocal tabstop=4 shiftwidth=4 expandtab
-	autocmd FileType python setlocal textwidth=81 
+	autocmd FileType python setlocal textwidth=81 wrapmargin=0 colorcolumn=81
 	autocmd FileType python setlocal wrap 
 	autocmd FileType python setlocal cindent
 	autocmd FileType python :iabbrev <buffer> iff if:<left>
@@ -303,7 +303,7 @@ augroup end
 "" }}}
 " Look {{{
 if has('gui')
-	set guifont=Courier\ New:h14
+	set guifont=Consolas:h14
 	"autocmd FileType vim highlight Normal guifg=#1A1B37
 	"autocmd FileType vim highlight vimHighlight gui=bold guifg=#DFC932
 	"autocmd FileType vim highlight vimMap guifg=#133A44
@@ -338,8 +338,6 @@ endfunc
 "" }}}
 "" Fugitive {{{
 let g:fugitive_git_command='C:\Git\bin\git.exe'
-"" }} 
-
 "" }}}
 """ Filetype Specific {{{
 "" python {{{
@@ -364,7 +362,6 @@ augroup END
 " }}}
 " autocompletion
 augroup tags_cpp
-	autocmd FileType cpp setlocal tags+=$HOME/vimfiles/autocomplete/tags/cpp
 	autocmd FileType cpp setlocal tags+=$HOME/vimfiles/autocomplete/tags/cpp
 augroup END
 "" }}}
