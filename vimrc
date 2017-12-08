@@ -4,6 +4,18 @@
 set nocompatible
 " enable plugins
 set runtimepath+=$HOME/vimfiles/plugin
+
+" vim config paths {{{
+if has('win32')
+	let $VIM_DIR = "vimfiles"
+else
+	let $VIM_DIR = ".vim"
+endif
+
+let $MYVIM_DIR = $HOME."/".$VIM_DIR
+let $MYVIMRC = $MYVIM_DIR."/vimrc"
+" }}}
+
 " enable syntax
 syntax on
 " enable per project configuration
@@ -18,11 +30,11 @@ set history=100
 set laststatus=2
 " Annoying backup files {{{
 set backup
-set backupdir=$HOME/vimfiles/backup
+let &backupdir = $MYVIM_DIR.'/backup'
 " }}}
 " Annoying swap files {{{
 set swapfile
-set directory=$HOME/vimfiles/swap
+let &directory = $MYVIM_DIR.'/swap'
 " }}}
 
 set nowrap
@@ -119,7 +131,7 @@ augroup END
 """ }}}
 """" Mappings {{{
 let mapleader = ','
-let $MYVIMRC = $HOME.'\vimfiles\vimrc'
+
 " Global {{{
 " select current word in visual mode
 noremap <space> viw
