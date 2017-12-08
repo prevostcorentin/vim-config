@@ -2,24 +2,40 @@
 "" Global {{{
 " don't want that good ol' Vi
 set nocompatible
-" enable plugins
-set runtimepath+=$HOME/vimfiles/plugin
-
-" vim config paths {{{
+" Vim config paths {{{
 if has('win32')
 	let $VIM_DIR = "vimfiles"
 else
 	let $VIM_DIR = ".vim"
 endif
-
 let $MYVIM_DIR = $HOME."/".$VIM_DIR
 let $MYVIMRC = $MYVIM_DIR."/vimrc"
-" }}}
-
-" enable syntax
-syntax on
+" enable plugins
+set runtimepath+=$HOME/vimfiles/plugin
 " enable per project configuration
 set exrc
+" }}}
+" Backup files {{{
+set backup
+let &backupdir = $MYVIM_DIR.'/backup'
+" }}}
+" Swap files {{{
+set swapfile
+let &directory = $MYVIM_DIR.'/swap'
+" }}}
+" Search {{{
+set incsearch
+set hlsearch
+" }}}
+" File encoding {{{
+if has("multi_byte")
+	set encoding=utf-8
+	setglobal fileencoding=utf-8
+	set fileencodings=utf-8,latin1
+end
+" }}}
+" enable syntax
+syntax on
 " modern using of backspace in insert mode
 set backspace=indent,eol,start
 " line numbering
@@ -28,29 +44,9 @@ set relativenumber numberwidth=4
 set history=100
 " always show status line
 set laststatus=2
-" Annoying backup files {{{
-set backup
-let &backupdir = $MYVIM_DIR.'/backup'
-" }}}
-" Annoying swap files {{{
-set swapfile
-let &directory = $MYVIM_DIR.'/swap'
-" }}}
-
+" don't wrap lines
 set nowrap
-
-" Search {{{
-set incsearch
-set hlsearch
-" }}}
-
-" set file encoding to utf-8 if possible
-if has("multi_byte")
-	set encoding=utf-8
-	setglobal fileencoding=utf-8
-	set fileencodings=utf-8,latin1
-end
-
+" display tabs and trailing spaces
 set listchars=tab:►\ ,trail:●
 
 if has('gui')
