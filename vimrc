@@ -48,11 +48,18 @@ set laststatus=2
 set nowrap
 " display tabs and trailing spaces
 set listchars=tab:►\ ,trail:●
-
+" GUI Specific {{{
 if has('gui')
-" no gui options
+" no menu, sidebar etc...
 	set guioptions=
 endif
+" }}}
+" Terminal Specific {{{
+if !has('gui')
+	" enable full mouse support
+	set mouse=a
+endif
+" }}}
 " auto commands {{{
 augroup number_when_inserting
 	autocmd!
@@ -141,10 +148,10 @@ noremap <Down> <nop>
 " navigate through buffers
 nnoremap <F5> :buffers<cr>:buffer
 " move through splits
-nnoremap <A-k> <C-w>k
-nnoremap <A-j> <C-w>j
-nnoremap <A-l> <C-w>l
-nnoremap <A-h> <C-w>h
+nnoremap <C-k> <C-w>k
+nnoremap <C-j> <C-w>j
+nnoremap <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
 " undo 2 changes one at a time
 nnoremap <leader>d "1dd"2dd:let @"=@1<CR>
 "" create splits {{{
