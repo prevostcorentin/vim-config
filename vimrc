@@ -16,11 +16,11 @@ set relativenumber numberwidth=4
 set history=100
 " always show status line
 set laststatus=2
-" Annoying backup files {{{
+" Backup files {{{
 set backup
 set backupdir=$HOME/vimfiles/backup
 " }}}
-" Annoying swap files {{{
+" Swap files {{{
 set swapfile
 set directory=$HOME/vimfiles/swap
 " }}}
@@ -313,23 +313,12 @@ augroup end
 " }}}
 "" }}}
 " Look {{{
-if has('gui')
+if has('gui') && has('win32')
 	set guifont=Consolas:h14
-	"autocmd FileType vim highlight Normal guifg=#1A1B37
-	"autocmd FileType vim highlight vimHighlight gui=bold guifg=#DFC932
-	"autocmd FileType vim highlight vimMap guifg=#133A44
-	"autocmd FileType vim highlight vimAugroupKey gui=bold guifg=#133A44
-	"autocmd FileType vim highlight vimAutocmd guifg=#234154
-	"autocmd FileType vim highlight vimIsCommand guifg=#537A74
-	"autocmd FileType vim highlight vimAutoCmdSfxList guifg=#537A74
-	"autocmd FileType vim highlight vimOper guifg=#000000
-	"autocmd FileType vim highlight vimHiGroup guifg=#000000
-	if has('win32')
-		if &g:background ==# 'dark'
-			colorscheme twilight
-		else
-			colorscheme simpleandfriendly
-		endif
+	if &g:background ==# 'dark'
+		colorscheme twilight
+	else
+		colorscheme simpleandfriendly
 	endif
 endif
 " }}}
