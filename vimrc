@@ -130,6 +130,12 @@ augroup filetype_make
 	autocmd Filetype make setlocal tabstop=2 shiftwidth=2
 augroup END
 " }}}
+" linux scripts {{{
+augroup linux_scripts
+	autocmd!
+	autocmd FileType zsh,bash setlocal tabstop=2 shiftwidth=2 noexpandtab
+augroup END
+" }}}
 "" }}}
 """ }}}
 """" Mappings {{{
