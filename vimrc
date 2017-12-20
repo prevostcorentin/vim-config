@@ -80,7 +80,6 @@ augroup END
 " vim {{{
 augroup filetype_vim
 	autocmd! 
-	" autocmd Filetype vim setlocal list listchars=tab:►\ ,trail:●
 	autocmd Filetype vim setlocal nolist
 	autocmd Filetype vim setlocal textwidth=90
 	autocmd FileType vim setlocal nowrap
@@ -90,6 +89,13 @@ augroup filetype_vim
 	autocmd FileType vim setlocal autoindent
 	autocmd FileType vim setlocal tabstop=2 shiftwidth=2
 augroup END
+" }}}
+" conf {{{
+augroup filetype_conf
+	autocmd FileType conf setlocal foldmethod=marker
+	autocmd FileType conf setlocal foldlevelstart=0
+	autocmd FileType conf setlocal autoindent
+	autocmd FileType conf setlocal tabstop=4 shiftwidth=4
 " }}}
 " html {{{
 augroup filetype_html
@@ -124,6 +130,15 @@ augroup filetype_cpp
 	autocmd FileType cpp setlocal tabstop=3 shiftwidth=3 noexpandtab
 augroup END
 " }}}
+" html, php
+augroup filetype_html
+	autocmd!
+	autocmd FileType html,php setlocal tabstop=2 shiftwidth=2
+	autocmd FileType html,php setlocal nowrap
+	autocmd FileType html,php setlocal cindent
+	autocmd FileType html,php setlocal foldmethod=indent
+	autocmd FileType html,php setlocal foldlevelstart=0
+augroup END
 " make {{{
 augroup filetype_make
 	autocmd!
@@ -151,15 +166,6 @@ noremap <Up> <nop>
 noremap <Down> <nop>
 " }}}
 """ Normal {{{
-" navigate through buffers
-nnoremap <F5> :buffers<cr>:buffer
-" move through splits
-nnoremap <C-k> <C-w>k
-nnoremap <C-j> <C-w>j
-nnoremap <C-l> <C-w>l
-nnoremap <C-h> <C-w>h
-" undo 2 changes one at a time
-nnoremap <leader>d "1dd"2dd:let @"=@1<CR>
 "" create splits {{{
 " $MYVIMRC {{{
 " horizontal
@@ -171,13 +177,22 @@ nnoremap <C-s>hv :execute "leftabove vnew ".$MYVIMRC<CR>
 " }}}
 " new buffer {{{
 " horizontal
-nnoremap <C-s>ln :execute "rightbelow vnew ."<CR>
-nnoremap <C-s>hn :execute "leftabove vnew ."<CR>
+nnoremap <C-s>ln :execute "rightbelow vnew"<CR>
+nnoremap <C-s>hn :execute "leftabove vnew"<CR>
 " vertical
-nnoremap <C-s>jn :execute "rightbelow new ."<CR>
-nnoremap <C-s>kn :execute "leftabove new ."<CR>
+nnoremap <C-s>jn :execute "rightbelow new"<CR>
+nnoremap <C-s>kn :execute "leftabove new"<CR>
 " }}}
 "" }}}
+" navigate through buffers
+nnoremap <F5> :buffers<cr>:buffer
+" move through splits
+nnoremap <C-k> <C-w>k
+nnoremap <C-j> <C-w>j
+nnoremap <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
+" undo 2 changes one at a time
+nnoremap <leader>d "1dd"2dd:let @"=@1<CR>
 " source file
 nnoremap <leader>x :source 
 " edit a file
