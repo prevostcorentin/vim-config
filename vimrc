@@ -194,7 +194,7 @@ vnoremap jk <Esc>
 " capitalize
 vnoremap \ U
 " add quotes around selection
-vnoremap <leader>" <esc>a"<esc>v`<<esc>i"<esc>v
+vnoremap <leader>' <esc>a'<esc>v`<<esc>i'<esc>v
 " }}}
 " Insert {{{
 " delete current line without leaving mode
