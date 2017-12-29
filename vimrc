@@ -47,7 +47,12 @@ set laststatus=2
 " don't wrap lines
 set nowrap
 " display tabs and trailing spaces
-set listchars=tab:►\ ,trail:●
+"set listchars=tab:âº\ ,trail:â
+
+if has('win32')
+	set fileformats=unix,dos
+endif
+
 " GUI Specific {{{
 if has('gui')
 " no menu, sidebar etc...
@@ -70,11 +75,52 @@ augroup END
 "" }}}
 "" Filetype specific {{{
 filetype plugin on
+" conf {{{
+augroup filetype_conf
+	autocmd FileType conf setlocal foldmethod=marker
+	autocmd FileType conf setlocal foldlevelstart=0
+	autocmd FileType conf setlocal autoindent
+	autocmd FileType conf setlocal tabstop=4 shiftwidth=4
+" }}}
+" cpp {{{
+augroup filetype_cpp
+	autocmd!
+	autocmd FileType cpp setlocal listchars=tab:â¬â,trail:â
+	autocmd FileType cpp setlocal list
+	autocmd FileType cpp setlocal nowrap
+	autocmd FileType cpp setlocal cindent
+	autocmd FileType cpp setlocal smarttab
+	autocmd FileType cpp setlocal foldmethod=indent
+	autocmd FileType cpp setlocal foldlevelstart=0
+	" insert tabs and display it as 3 spaces wide
+	autocmd FileType cpp setlocal tabstop=3 shiftwidth=3 noexpandtab
+augroup END
+" }}}
+" html {{{
+augroup filetype_html
+	autocmd!
+	autocmd BufNewFile, BufRead *.html setlocal nowrap
+	autocmd BufWritePre *.html :normal gg=G
+augroup END
+" }}}
 " markdown {{{
 augroup filetype_markdown
 	autocmd!
-	autocmd Filetype vim setlocal list listchars=tab:►\ ,trail:●
+	autocmd Filetype vim setlocal list listchars=tab:âº\ ,trail:â
 	autocmd BufNewFile *.txt :write
+augroup END
+" }}}
+" python {{{
+augroup filetype_python
+	autocmd!
+	" tabs are trailing spaces are displayed
+	autocmd FileType python setlocal nolist
+	autocmd FileType python setlocal tabstop=4 shiftwidth=4 expandtab
+	autocmd FileType python setlocal textwidth=81 wrapmargin=0 colorcolumn=81
+	autocmd FileType python setlocal foldmethod=indent foldlevelstart=0
+	autocmd FileType python setlocal nowrap 
+	autocmd FileType python setlocal cindent
+	autocmd FileType python :iabbrev <buffer> iff if:<left>
 augroup END
 " }}}
 " vim {{{
@@ -90,46 +136,13 @@ augroup filetype_vim
 	autocmd FileType vim setlocal tabstop=2 shiftwidth=2
 augroup END
 " }}}
-" conf {{{
-augroup filetype_conf
-	autocmd FileType conf setlocal foldmethod=marker
-	autocmd FileType conf setlocal foldlevelstart=0
-	autocmd FileType conf setlocal autoindent
-	autocmd FileType conf setlocal tabstop=4 shiftwidth=4
-" }}}
-" html {{{
-augroup filetype_html
-	autocmd!
-	autocmd BufNewFile, BufRead *.html setlocal nowrap
-	autocmd BufWritePre *.html :normal gg=G
+" vue
+augroup filetype_vue
+	autocmd FileType *.vue setlocal filetype=html
+	autocmd FileType *.vue setlocal nowrap
+	autocmd FileType *.vue setlocal tabstop=2 shiftwidth=2 expandtab
+	autocmd FileType *.vue setlocal list
 augroup END
-" }}}
-" python {{{
-augroup filetype_python
-	autocmd!
-	" tabs are trailing spaces are displayed
-	autocmd FileType python setlocal list
-	autocmd FileType python setlocal tabstop=4 shiftwidth=4 expandtab
-	autocmd FileType python setlocal textwidth=81 wrapmargin=0 colorcolumn=81
-	autocmd FileType python setlocal wrap 
-	autocmd FileType python setlocal cindent
-	autocmd FileType python :iabbrev <buffer> iff if:<left>
-augroup END
-" }}}
-" cpp {{{
-augroup filetype_cpp
-	autocmd!
-	autocmd FileType cpp setlocal listchars=tab:╬═,trail:●
-	autocmd FileType cpp setlocal list
-	autocmd FileType cpp setlocal nowrap
-	autocmd FileType cpp setlocal cindent
-	autocmd FileType cpp setlocal smarttab
-	autocmd FileType cpp setlocal foldmethod=indent
-	autocmd FileType cpp setlocal foldlevelstart=0
-	" insert tabs and display it as 3 spaces wide
-	autocmd FileType cpp setlocal tabstop=3 shiftwidth=3 noexpandtab
-augroup END
-" }}}
 " html, php
 augroup filetype_html
 	autocmd!
@@ -350,7 +363,7 @@ augroup end
 "" }}}
 " Look {{{
 if has('gui') && has('win32')
-	set guifont=Consolas:h14
+	set guifont=Terminus:h14
 	if &g:background ==# 'dark'
 		colorscheme twilight
 	else
