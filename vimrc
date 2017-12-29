@@ -1,3 +1,59 @@
+"""" Imported {{{
+"" Plugins {{{
+call plug#begin() " {{{
+Plug 'vim-python/python-syntax'
+Plug 'vimplugin/project.vim'
+Plug 'tpope/vim-fugitive'
+call plug#end()   " }}}
+" python-syntax {{{
+" }}}
+"" }}}
+
+"" Fugitive {{{
+let g:fugitive_git_command='git'
+"" }}}
+" }}}
+"" Show syntax highlighting groups for word under cursor {{{
+" Mapping {{{
+nmap <C-S-P> :call <SID>SynStack()<CR>
+" }}}
+" Function {{{
+function! <SID>SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
+" }}}
+"" }}}
+""" Filetype Specific {{{
+"" python {{{
+" autocompletion {{{
+let g:pydiction_location = $HOME."/vimfiles/autocomplete/dictionary/python"
+augroup pydiction
+" https://github.com/rkulla/pydiction
+	autocmd!
+	autocmd FileType python :source $HOME/vimfiles/autocomplete/python.vim
+augroup END
+" }}}
+"" }}}
+"" cpp {{{
+" syntax highlighting {{{
+augroup cpp_syntax_highlighting
+	autocmd!
+	autocmd FileType cpp let g:cpp_member_variables_highlight=1
+	autocmd FileType cpp let g:cpp_class_scope_highlight=1
+	autocmd FileType cpp let g:cpp_class_decl_highlight=1
+augroup END
+" auto
+" }}}
+" autocompletion
+augroup tags_cpp
+	autocmd FileType cpp setlocal tags+=$HOME/vimfiles/autocomplete/tags/cpp
+augroup END
+"" }}}
+""" }}}
+"""" }}}
 """ Options {{{
 "" Global {{{
 " don't want that good ol' Vi
@@ -11,7 +67,7 @@ endif
 let $MYVIM_DIR = $HOME."/".$VIM_DIR
 let $MYVIMRC = $MYVIM_DIR."/vimrc"
 " enable plugins
-set runtimepath+=$HOME/vimfiles/plugin
+"set runtimepath+=$HOME/vimfiles/plugin
 " enable per project configuration
 set exrc
 " }}}
@@ -364,6 +420,7 @@ augroup end
 " Look {{{
 if has('gui') && has('win32')
 	set guifont=Terminus:h14
+	set background=light
 	if &g:background ==# 'dark'
 		colorscheme twilight
 	else
@@ -371,48 +428,3 @@ if has('gui') && has('win32')
 	endif
 endif
 " }}}
-"""" Imported {{{
-"" Show syntax highlighting groups for word under cursor {{{
-" Mapping {{{
-nmap <C-S-P> :call <SID>SynStack()<CR>
-" }}}
-" Function {{{
-function! <SID>SynStack()
-  if !exists("*synstack")
-    return
-  endif
-  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunc
-" }}}
-"" }}}
-"" Fugitive {{{
-let g:fugitive_git_command='git'
-"" }}}
-""" Filetype Specific {{{
-"" python {{{
-" autocompletion {{{
-let g:pydiction_location = $HOME."/vimfiles/autocomplete/dictionary/python"
-augroup pydiction
-" https://github.com/rkulla/pydiction
-	autocmd!
-	autocmd FileType python :source $HOME/vimfiles/autocomplete/python.vim
-augroup END
-" }}}
-"" }}}
-"" cpp {{{
-" syntax highlighting {{{
-augroup cpp_syntax_highlighting
-	autocmd!
-	autocmd FileType cpp let g:cpp_member_variables_highlight=1
-	autocmd FileType cpp let g:cpp_class_scope_highlight=1
-	autocmd FileType cpp let g:cpp_class_decl_highlight=1
-augroup END
-" auto
-" }}}
-" autocompletion
-augroup tags_cpp
-	autocmd FileType cpp setlocal tags+=$HOME/vimfiles/autocomplete/tags/cpp
-augroup END
-"" }}}
-""" }}}
-"""" }}}
