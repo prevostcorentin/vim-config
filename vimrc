@@ -1,18 +1,48 @@
 """" Imported {{{
-"" Plugins {{{
+""" Plugins {{{
 call plug#begin() " {{{
-Plug 'vim-python/python-syntax'
-Plug 'vimplugin/project.vim'
+" Git {{{
 Plug 'tpope/vim-fugitive'
-call plug#end()   " }}}
-" python-syntax {{{
+Plug 'airblade/vim-gitgutter'
+" }}}
+" File/Project browsing {{{
+Plug 'vimplugin/project.vim'
+Plug 'kien/ctrlp.vim'
+Plug 'vim-scripts/taglist.vim'
+" }}}
+"" Python {{{
+" Auto-completion {{{
+Plug 'davidhalter/jedi-vim'
+" }}}
+" Syntax highlighting {{{
+Plug 'vim-python/python-syntax'
 " }}}
 "" }}}
+"" UI {{{
+" Start screen {{{
+Plug 'mhinz/vim-startify'
+" }}}
+" Colorschemes {{{
+Plug 'hauleth/blame.vim'
+" }}}
+"" }}}
+"" Javascript {{{
+" Syntax highlighting {{{
+Plug 'posva/vim-vue'
+" }}}
+"" }}}
+call plug#end()   " }}}
+""" }}}
 
 "" Fugitive {{{
 let g:fugitive_git_command='git'
 "" }}}
 " }}}
+"" Settings {{{
+" python-syntax {{{
+let g:python_highlight_all = 1
+" }}}
+"" }}}
 "" Show syntax highlighting groups for word under cursor {{{
 " Mapping {{{
 nmap <C-S-P> :call <SID>SynStack()<CR>
@@ -27,16 +57,6 @@ endfunc
 " }}}
 "" }}}
 """ Filetype Specific {{{
-"" python {{{
-" autocompletion {{{
-let g:pydiction_location = $HOME."/vimfiles/autocomplete/dictionary/python"
-augroup pydiction
-" https://github.com/rkulla/pydiction
-	autocmd!
-	autocmd FileType python :source $HOME/vimfiles/autocomplete/python.vim
-augroup END
-" }}}
-"" }}}
 "" cpp {{{
 " syntax highlighting {{{
 augroup cpp_syntax_highlighting
@@ -420,9 +440,9 @@ augroup end
 " Look {{{
 if has('gui') && has('win32')
 	set guifont=Terminus:h14
-	set background=light
+	set background=dark
 	if &g:background ==# 'dark'
-		colorscheme twilight
+		colorscheme blame
 	else
 		colorscheme simpleandfriendly
 	endif
