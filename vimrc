@@ -47,7 +47,12 @@ set laststatus=2
 " don't wrap lines
 set nowrap
 " display tabs and trailing spaces
-set listchars=tab:►\ ,trail:●
+"set listchars=tab:âº\ ,trail:â
+
+if has('win32')
+	set fileformats=unix,dos
+endif
+
 " GUI Specific {{{
 if has('gui')
 " no menu, sidebar etc...
@@ -70,50 +75,17 @@ augroup END
 "" }}}
 "" Filetype specific {{{
 filetype plugin on
-" markdown {{{
-augroup filetype_markdown
-	autocmd!
-	autocmd Filetype vim setlocal list listchars=tab:►\ ,trail:●
-	autocmd BufNewFile *.txt :write
-augroup END
-" }}}
-" vim {{{
-augroup filetype_vim
-	autocmd! 
-	" autocmd Filetype vim setlocal list listchars=tab:►\ ,trail:●
-	autocmd Filetype vim setlocal nolist
-	autocmd Filetype vim setlocal textwidth=90
-	autocmd FileType vim setlocal nowrap
-	autocmd FileType vim setlocal foldmethod=marker
-	" Fold every fold at opening
-	autocmd FileType vim setlocal foldlevelstart=0
-	autocmd FileType vim setlocal autoindent
-	autocmd FileType vim setlocal tabstop=2 shiftwidth=2
-augroup END
-" }}}
-" html {{{
-augroup filetype_html
-	autocmd!
-	autocmd BufNewFile, BufRead *.html setlocal nowrap
-	autocmd BufWritePre *.html :normal gg=G
-augroup END
-" }}}
-" python {{{
-augroup filetype_python
-	autocmd!
-	" tabs are trailing spaces are displayed
-	autocmd FileType python setlocal list
-	autocmd FileType python setlocal tabstop=4 shiftwidth=4 expandtab
-	autocmd FileType python setlocal textwidth=81 wrapmargin=0 colorcolumn=81
-	autocmd FileType python setlocal wrap 
-	autocmd FileType python setlocal cindent
-	autocmd FileType python :iabbrev <buffer> iff if:<left>
-augroup END
+" conf {{{
+augroup filetype_conf
+	autocmd FileType conf setlocal foldmethod=marker
+	autocmd FileType conf setlocal foldlevelstart=0
+	autocmd FileType conf setlocal autoindent
+	autocmd FileType conf setlocal tabstop=4 shiftwidth=4
 " }}}
 " cpp {{{
 augroup filetype_cpp
 	autocmd!
-	autocmd FileType cpp setlocal listchars=tab:╬═,trail:●
+	autocmd FileType cpp setlocal listchars=tab:â¬â,trail:â
 	autocmd FileType cpp setlocal list
 	autocmd FileType cpp setlocal nowrap
 	autocmd FileType cpp setlocal cindent
@@ -124,10 +96,72 @@ augroup filetype_cpp
 	autocmd FileType cpp setlocal tabstop=3 shiftwidth=3 noexpandtab
 augroup END
 " }}}
+" html {{{
+augroup filetype_html
+	autocmd!
+	autocmd BufNewFile, BufRead *.html setlocal nowrap
+	autocmd BufWritePre *.html :normal gg=G
+augroup END
+" }}}
+" markdown {{{
+augroup filetype_markdown
+	autocmd!
+	autocmd Filetype vim setlocal list listchars=tab:âº\ ,trail:â
+	autocmd BufNewFile *.txt :write
+augroup END
+" }}}
+" python {{{
+augroup filetype_python
+	autocmd!
+	" tabs are trailing spaces are displayed
+	autocmd FileType python setlocal nolist
+	autocmd FileType python setlocal tabstop=4 shiftwidth=4 expandtab
+	autocmd FileType python setlocal textwidth=81 wrapmargin=0 colorcolumn=81
+	autocmd FileType python setlocal foldmethod=indent foldlevelstart=0
+	autocmd FileType python setlocal nowrap 
+	autocmd FileType python setlocal cindent
+	autocmd FileType python :iabbrev <buffer> iff if:<left>
+augroup END
+" }}}
+" vim {{{
+augroup filetype_vim
+	autocmd! 
+	autocmd Filetype vim setlocal nolist
+	autocmd Filetype vim setlocal textwidth=90
+	autocmd FileType vim setlocal nowrap
+	autocmd FileType vim setlocal foldmethod=marker
+	" Fold every fold at opening
+	autocmd FileType vim setlocal foldlevelstart=0
+	autocmd FileType vim setlocal autoindent
+	autocmd FileType vim setlocal tabstop=2 shiftwidth=2
+augroup END
+" }}}
+" vue
+augroup filetype_vue
+	autocmd FileType *.vue setlocal filetype=html
+	autocmd FileType *.vue setlocal nowrap
+	autocmd FileType *.vue setlocal tabstop=2 shiftwidth=2 expandtab
+	autocmd FileType *.vue setlocal list
+augroup END
+" html, php
+augroup filetype_html
+	autocmd!
+	autocmd FileType html,php setlocal tabstop=2 shiftwidth=2
+	autocmd FileType html,php setlocal nowrap
+	autocmd FileType html,php setlocal cindent
+	autocmd FileType html,php setlocal foldmethod=indent
+	autocmd FileType html,php setlocal foldlevelstart=0
+augroup END
 " make {{{
 augroup filetype_make
 	autocmd!
 	autocmd Filetype make setlocal tabstop=2 shiftwidth=2
+augroup END
+" }}}
+" linux scripts {{{
+augroup linux_scripts
+	autocmd!
+	autocmd FileType zsh,bash setlocal tabstop=2 shiftwidth=2 noexpandtab
 augroup END
 " }}}
 "" }}}
@@ -145,15 +179,6 @@ noremap <Up> <nop>
 noremap <Down> <nop>
 " }}}
 """ Normal {{{
-" navigate through buffers
-nnoremap <F5> :buffers<cr>:buffer
-" move through splits
-nnoremap <C-k> <C-w>k
-nnoremap <C-j> <C-w>j
-nnoremap <C-l> <C-w>l
-nnoremap <C-h> <C-w>h
-" undo 2 changes one at a time
-nnoremap <leader>d "1dd"2dd:let @"=@1<CR>
 "" create splits {{{
 " $MYVIMRC {{{
 " horizontal
@@ -165,13 +190,22 @@ nnoremap <C-s>hv :execute "leftabove vnew ".$MYVIMRC<CR>
 " }}}
 " new buffer {{{
 " horizontal
-nnoremap <C-s>ln :execute "rightbelow vnew ."<CR>
-nnoremap <C-s>hn :execute "leftabove vnew ."<CR>
+nnoremap <C-s>ln :execute "rightbelow vnew"<CR>
+nnoremap <C-s>hn :execute "leftabove vnew"<CR>
 " vertical
-nnoremap <C-s>jn :execute "rightbelow new ."<CR>
-nnoremap <C-s>kn :execute "leftabove new ."<CR>
+nnoremap <C-s>jn :execute "rightbelow new"<CR>
+nnoremap <C-s>kn :execute "leftabove new"<CR>
 " }}}
 "" }}}
+" navigate through buffers
+nnoremap <F5> :buffers<cr>:buffer
+" move through splits
+nnoremap <C-k> <C-w>k
+nnoremap <C-j> <C-w>j
+nnoremap <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
+" undo 2 changes one at a time
+nnoremap <leader>d "1dd"2dd:let @"=@1<CR>
 " source file
 nnoremap <leader>x :source 
 " edit a file
@@ -329,7 +363,7 @@ augroup end
 "" }}}
 " Look {{{
 if has('gui') && has('win32')
-	set guifont=Consolas:h14
+	set guifont=Terminus:h14
 	if &g:background ==# 'dark'
 		colorscheme twilight
 	else
