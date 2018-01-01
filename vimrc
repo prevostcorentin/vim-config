@@ -453,3 +453,4 @@ if has('gui') && has('win32')
 	endif
 endif
 " }}}
+" vim: set foldmethod=marker foldlevelstart=0
