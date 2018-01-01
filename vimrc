@@ -123,7 +123,7 @@ set laststatus=2
 " don't wrap lines
 set nowrap
 " display tabs and trailing spaces
-"set listchars=tab:âº\ ,trail:â
+set listchars=tab:▸·,trail:•
 
 if has('win32')
 	set fileformats=unix,dos
@@ -161,7 +161,7 @@ augroup filetype_conf
 " cpp {{{
 augroup filetype_cpp
 	autocmd!
-	autocmd FileType cpp setlocal listchars=tab:â¬â,trail:â
+	autocmd FileType cpp setlocal listchars=tab:─┼,trail:•
 	autocmd FileType cpp setlocal list
 	autocmd FileType cpp setlocal nowrap
 	autocmd FileType cpp setlocal cindent
@@ -182,7 +182,7 @@ augroup END
 " markdown {{{
 augroup filetype_markdown
 	autocmd!
-	autocmd Filetype vim setlocal list listchars=tab:âº\ ,trail:â
+	autocmd Filetype vim setlocal list
 	autocmd BufNewFile *.txt :write
 augroup END
 " }}}
@@ -384,6 +384,7 @@ augroup END
 " cpp {{{
 augroup filetype_cpp_mappings
 	autocmd!
+	autocmd FileType cpp setlocal listchars=tab:╬═,trail:•
 	autocmd FileType cpp nnoremap <buffer> <localleader>c I//<space>:normal
 	autocmd FileType cpp nnoremap <buffer> <localleader>;l :execute "normal! mqA;\<esc>`q"
 augroup END
@@ -439,7 +440,7 @@ augroup end
 "" }}}
 " Look {{{
 if has('gui') && has('win32')
-	set guifont=Terminus:h14
+	set guifont=Source_Code_Pro:h14:cANSI:qDRAFT
 	set background=dark
 	if &g:background ==# 'dark'
 		colorscheme blame
