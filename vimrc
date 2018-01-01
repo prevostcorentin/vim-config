@@ -18,6 +18,15 @@ Plug 'davidhalter/jedi-vim'
 Plug 'vim-python/python-syntax'
 " }}}
 "" }}}
+"" C/C++ {{{
+" Auto-completion {{{
+" Based on a ctag database
+Plug 'vim-scripts/OmniCppComplete'
+" }}}
+" Syntax highlighting {{{
+Plug 'octol/vim-cpp-enhanced-highlight'
+" }}}
+"" }}}
 "" UI {{{
 " Start screen {{{
 Plug 'mhinz/vim-startify'
@@ -32,17 +41,20 @@ Plug 'posva/vim-vue'
 " }}}
 "" }}}
 call plug#end()   " }}}
-""" }}}
-
-"" Fugitive {{{
-let g:fugitive_git_command='git'
-"" }}}
-" }}}
 "" Settings {{{
+" vim-cpp-enhanced-highlight {{{
+let g:cpp_class_scope_highlight = 1
+let g:cpp_class_decl_highlight = 1
+let g:cpp_class_scope_highlight = 1
+" }}}
+" Fugitive {{{
+let g:fugitive_git_command='git'
+" }}}
 " python-syntax {{{
 let g:python_highlight_all = 1
 " }}}
 "" }}}
+""" }}}
 "" Show syntax highlighting groups for word under cursor {{{
 " Mapping {{{
 nmap <C-S-P> :call <SID>SynStack()<CR>
@@ -57,18 +69,10 @@ endfunc
 " }}}
 "" }}}
 """ Filetype Specific {{{
-"" cpp {{{
-" syntax highlighting {{{
-augroup cpp_syntax_highlighting
-	autocmd!
-	autocmd FileType cpp let g:cpp_member_variables_highlight=1
-	autocmd FileType cpp let g:cpp_class_scope_highlight=1
-	autocmd FileType cpp let g:cpp_class_decl_highlight=1
-augroup END
-" auto
-" }}}
+"" C/C++ {{{
 " autocompletion
-augroup tags_cpp
+augroup autocompletion_cpp
+	autocmd BufNewFile,BufRead,BufEnter *.cpp,*.hpp,*.h,*.c setlocal omnifunc=omni#cpp#complete#Main
 	autocmd FileType cpp setlocal tags+=$HOME/vimfiles/autocomplete/tags/cpp
 augroup END
 "" }}}
@@ -161,7 +165,7 @@ augroup filetype_conf
 " cpp {{{
 augroup filetype_cpp
 	autocmd!
-	autocmd FileType cpp setlocal listchars=tab:─┼,trail:•
+	autocmd FileType cpp setlocal listchars=tab:─┼,trail:•
 	autocmd FileType cpp setlocal list
 	autocmd FileType cpp setlocal nowrap
 	autocmd FileType cpp setlocal cindent
