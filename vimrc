@@ -450,8 +450,12 @@ augroup end
 " }}}
 "" }}}
 " Look {{{
-if has('gui') && has('win32')
-	set guifont=Source_Code_Pro:h14:cANSI:qDRAFT
+if has('gui')
+	if has('win32')
+		set guifont=Source_Code_Pro:h14:cANSI:qDRAFT
+	else
+		set guifont=Monospace
+	endif
 endif
 set background=dark
 if has('gui')
