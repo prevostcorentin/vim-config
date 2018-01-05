@@ -106,7 +106,14 @@ augroup END
 """ }}}
 """" Mappings {{{
 let mapleader = ','
-let $MYVIMRC = $HOME.'\vimfiles\vimrc'
+
+if has('win32')
+	let $MYVIMDIR = $HOME.'\vimfiles\'
+else
+	let $MYVIMDIR = $HOME.'/.vim/'
+endif
+
+let $MYVIMRC = $MYVIMDIR.'vimrc'
 " Global {{{
 " select current word in visual mode
 noremap <space> viw
