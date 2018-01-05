@@ -1,8 +1,119 @@
+"""" Imported {{{
+""" Plugins {{{
+call plug#begin() " {{{
+" Git {{{
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+" }}}
+" File/Project browsing {{{
+Plug 'vimplugin/project.vim'
+Plug 'kien/ctrlp.vim'
+Plug 'vim-scripts/taglist.vim'
+" }}}
+"" Python {{{
+" Auto-completion {{{
+Plug 'davidhalter/jedi-vim'
+" }}}
+" Syntax highlighting {{{
+Plug 'vim-python/python-syntax'
+" }}}
+"" }}}
+"" C/C++ {{{
+" Auto-completion {{{
+" Based on a ctag database
+Plug 'vim-scripts/OmniCppComplete'
+" }}}
+" Syntax highlighting {{{
+Plug 'octol/vim-cpp-enhanced-highlight'
+" }}}
+"" }}}
+"" UI {{{
+" Start screen {{{
+Plug 'mhinz/vim-startify'
+" }}}
+" Colorschemes {{{
+Plug 'hauleth/blame.vim'
+" }}}
+"" }}}
+"" Javascript {{{
+" Syntax highlighting {{{
+Plug 'posva/vim-vue'
+" }}}
+"" }}}
+call plug#end()   " }}}
+"" Settings {{{
+" vim-cpp-enhanced-highlight {{{
+let g:cpp_class_scope_highlight = 1
+let g:cpp_class_decl_highlight = 1
+let g:cpp_class_scope_highlight = 1
+" }}}
+" Fugitive {{{
+let g:fugitive_git_command='git'
+" }}}
+" python-syntax {{{
+let g:python_highlight_all = 1
+" }}}
+"" }}}
+""" }}}
+"" Show syntax highlighting groups for word under cursor {{{
+" Mapping {{{
+nmap <C-S-P> :call <SID>SynStack()<CR>
+" }}}
+" Function {{{
+function! <SID>SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
+" }}}
+"" }}}
+""" Filetype Specific {{{
+"" C/C++ {{{
+" autocompletion
+augroup autocompletion_cpp
+	autocmd BufNewFile,BufRead,BufEnter *.cpp,*.hpp,*.h,*.c setlocal omnifunc=omni#cpp#complete#Main
+	autocmd FileType cpp setlocal tags+=$HOME/vimfiles/autocomplete/tags/cpp
+augroup END
+"" }}}
+""" }}}
+"""" }}}
 """ Options {{{
 "" Global {{{
 " don't want that good ol' Vi
 set nocompatible
-set runtimepath+=$HOME/vimfiles/plugin
+" Vim config paths {{{
+if has('win32')
+	let $VIM_DIR = "vimfiles"
+else
+	let $VIM_DIR = ".vim"
+endif
+let $MYVIM_DIR = $HOME."/".$VIM_DIR
+let $MYVIMRC = $MYVIM_DIR."/vimrc"
+" enable plugins
+"set runtimepath+=$HOME/vimfiles/plugin
+" enable per project configuration
+set exrc
+" }}}
+" Backup files {{{
+set backup
+let &backupdir = $MYVIM_DIR.'/backup'
+" }}}
+" Swap files {{{
+set swapfile
+let &directory = $MYVIM_DIR.'/swap'
+" }}}
+" Search {{{
+set incsearch
+set hlsearch
+" }}}
+" File encoding {{{
+if has("multi_byte")
+	set encoding=utf-8
+	setglobal fileencoding=utf-8
+	set fileencodings=utf-8,latin1
+end
+" }}}
 " enable syntax
 syntax on
 " modern using of backspace in insert mode
@@ -13,25 +124,27 @@ set relativenumber numberwidth=4
 set history=100
 " always show status line
 set laststatus=2
-" don't want no ~* files
-set nobackup
-" don't want no *.sw* files
-set noswapfile
+" don't wrap lines
 set nowrap
+" display tabs and trailing spaces
+set listchars=tab:▸·,trail:•
 
-" set file encoding to utf-8 if possible
-if has("multi_byte")
-	set encoding=utf-8
-	setglobal fileencoding=utf-8
-	set fileencodings=utf-8,latin1
-end
+if has('win32')
+	set fileformats=unix,dos
+endif
 
-set listchars=tab:►\ ,trail:●
-
+" GUI Specific {{{
 if has('gui')
-" no gui options
+" no menu, sidebar etc...
 	set guioptions=
 endif
+" }}}
+" Terminal Specific {{{
+if !has('gui')
+	" enable full mouse support
+	set mouse=a
+endif
+" }}}
 " auto commands {{{
 augroup number_when_inserting
 	autocmd!
@@ -42,50 +155,17 @@ augroup END
 "" }}}
 "" Filetype specific {{{
 filetype plugin on
-" markdown {{{
-augroup filetype_markdown
-	autocmd!
-	autocmd Filetype vim setlocal list listchars=tab:►\ ,trail:●
-	autocmd BufNewFile *.txt :write
-augroup END
-" }}}
-" vim {{{
-augroup filetype_vim
-	autocmd! 
-	" autocmd Filetype vim setlocal list listchars=tab:►\ ,trail:●
-	autocmd Filetype vim setlocal nolist
-	autocmd Filetype vim setlocal textwidth=90
-	autocmd FileType vim setlocal nowrap
-	autocmd FileType vim setlocal foldmethod=marker
-	" Fold every fold at opening
-	autocmd FileType vim setlocal foldlevelstart=0
-	autocmd FileType vim setlocal autoindent
-	autocmd FileType vim setlocal tabstop=2 shiftwidth=2
-augroup END
-" }}}
-" html {{{
-augroup filetype_html
-	autocmd!
-	autocmd BufNewFile, BufRead *.html setlocal nowrap
-	autocmd BufWritePre *.html :normal gg=G
-augroup END
-" }}}
-" python {{{
-augroup filetype_python
-	autocmd!
-	" tabs are trailing spaces are displayed
-	autocmd FileType python setlocal list
-	autocmd FileType python setlocal tabstop=4 shiftwidth=4 expandtab
-	autocmd FileType python setlocal textwidth=81 
-	autocmd FileType python setlocal wrap 
-	autocmd FileType python setlocal cindent
-	autocmd FileType python :iabbrev <buffer> iff if:<left>
-augroup END
+" conf {{{
+augroup filetype_conf
+	autocmd FileType conf setlocal foldmethod=marker
+	autocmd FileType conf setlocal foldlevelstart=0
+	autocmd FileType conf setlocal autoindent
+	autocmd FileType conf setlocal tabstop=4 shiftwidth=4
 " }}}
 " cpp {{{
 augroup filetype_cpp
 	autocmd!
-	autocmd FileType cpp setlocal listchars=tab:╬═,trail:●
+	autocmd FileType cpp setlocal listchars=tab:─┼,trail:•
 	autocmd FileType cpp setlocal list
 	autocmd FileType cpp setlocal nowrap
 	autocmd FileType cpp setlocal cindent
@@ -96,10 +176,72 @@ augroup filetype_cpp
 	autocmd FileType cpp setlocal tabstop=3 shiftwidth=3 noexpandtab
 augroup END
 " }}}
+" html {{{
+augroup filetype_html
+	autocmd!
+	autocmd BufNewFile, BufRead *.html setlocal nowrap
+	autocmd BufWritePre *.html :normal gg=G
+augroup END
+" }}}
+" markdown {{{
+augroup filetype_markdown
+	autocmd!
+	autocmd Filetype vim setlocal list
+	autocmd BufNewFile *.txt :write
+augroup END
+" }}}
+" python {{{
+augroup filetype_python
+	autocmd!
+	" tabs are trailing spaces are displayed
+	autocmd FileType python setlocal nolist
+	autocmd FileType python setlocal tabstop=4 shiftwidth=4 expandtab
+	autocmd FileType python setlocal textwidth=81 wrapmargin=0 colorcolumn=81
+	autocmd FileType python setlocal foldmethod=indent foldlevelstart=0
+	autocmd FileType python setlocal nowrap 
+	autocmd FileType python setlocal cindent
+	autocmd FileType python :iabbrev <buffer> iff if:<left>
+augroup END
+" }}}
+" vim {{{
+augroup filetype_vim
+	autocmd! 
+	autocmd Filetype vim setlocal nolist
+	autocmd Filetype vim setlocal textwidth=90
+	autocmd FileType vim setlocal nowrap
+	autocmd FileType vim setlocal foldmethod=marker
+	" Fold every fold at opening
+	autocmd FileType vim setlocal foldlevelstart=0
+	autocmd FileType vim setlocal autoindent
+	autocmd FileType vim setlocal tabstop=2 shiftwidth=2
+augroup END
+" }}}
+" vue
+augroup filetype_vue
+	autocmd FileType *.vue setlocal filetype=html
+	autocmd FileType *.vue setlocal nowrap
+	autocmd FileType *.vue setlocal tabstop=2 shiftwidth=2 expandtab
+	autocmd FileType *.vue setlocal list
+augroup END
+" html, php
+augroup filetype_html
+	autocmd!
+	autocmd FileType html,php setlocal tabstop=2 shiftwidth=2
+	autocmd FileType html,php setlocal nowrap
+	autocmd FileType html,php setlocal cindent
+	autocmd FileType html,php setlocal foldmethod=indent
+	autocmd FileType html,php setlocal foldlevelstart=0
+augroup END
 " make {{{
 augroup filetype_make
 	autocmd!
 	autocmd Filetype make setlocal tabstop=2 shiftwidth=2
+augroup END
+" }}}
+" linux scripts {{{
+augroup linux_scripts
+	autocmd!
+	autocmd FileType zsh,bash setlocal tabstop=2 shiftwidth=2 noexpandtab
 augroup END
 " }}}
 "" }}}
@@ -124,15 +266,6 @@ noremap <Up> <nop>
 noremap <Down> <nop>
 " }}}
 """ Normal {{{
-" navigate through buffers
-nnoremap <F5> :buffers<cr>:buffer
-" move through splits
-nnoremap <A-k> <C-w>k
-nnoremap <A-j> <C-w>j
-nnoremap <A-l> <C-w>l
-nnoremap <A-h> <C-w>h
-" undo 2 changes one at a time
-nnoremap <leader>d "1dd"2dd:let @"=@1<CR>
 "" create splits {{{
 " $MYVIMRC {{{
 " horizontal
@@ -144,13 +277,22 @@ nnoremap <C-s>hv :execute "leftabove vnew ".$MYVIMRC<CR>
 " }}}
 " new buffer {{{
 " horizontal
-nnoremap <C-s>ln :execute "rightbelow vnew ."<CR>
-nnoremap <C-s>hn :execute "leftabove vnew ."<CR>
+nnoremap <C-s>ln :execute "rightbelow vnew"<CR>
+nnoremap <C-s>hn :execute "leftabove vnew"<CR>
 " vertical
-nnoremap <C-s>jn :execute "rightbelow new ."<CR>
-nnoremap <C-s>kn :execute "leftabove new ."<CR>
+nnoremap <C-s>jn :execute "rightbelow new"<CR>
+nnoremap <C-s>kn :execute "leftabove new"<CR>
 " }}}
 "" }}}
+" navigate through buffers
+nnoremap <F5> :buffers<cr>:buffer
+" move through splits
+nnoremap <C-k> <C-w>k
+nnoremap <C-j> <C-w>j
+nnoremap <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
+" undo 2 changes one at a time
+nnoremap <leader>d "1dd"2dd:let @"=@1<CR>
 " source file
 nnoremap <leader>x :source 
 " edit a file
@@ -173,7 +315,7 @@ vnoremap jk <Esc>
 " capitalize
 vnoremap \ U
 " add quotes around selection
-vnoremap <leader>" <esc>a"<esc>v`<<esc>i"<esc>v
+vnoremap <leader>' <esc>a'<esc>v`<<esc>i'<esc>v
 " }}}
 " Insert {{{
 " delete current line without leaving mode
@@ -253,6 +395,7 @@ augroup END
 " cpp {{{
 augroup filetype_cpp_mappings
 	autocmd!
+	autocmd FileType cpp setlocal listchars=tab:╬═,trail:•
 	autocmd FileType cpp nnoremap <buffer> <localleader>c I//<space>:normal
 	autocmd FileType cpp nnoremap <buffer> <localleader>;l :execute "normal! mqA;\<esc>`q"
 augroup END
@@ -307,70 +450,14 @@ augroup end
 " }}}
 "" }}}
 " Look {{{
-if has('gui')
-	set guifont=Courier\ New:h14
-	"autocmd FileType vim highlight Normal guifg=#1A1B37
-	"autocmd FileType vim highlight vimHighlight gui=bold guifg=#DFC932
-	"autocmd FileType vim highlight vimMap guifg=#133A44
-	"autocmd FileType vim highlight vimAugroupKey gui=bold guifg=#133A44
-	"autocmd FileType vim highlight vimAutocmd guifg=#234154
-	"autocmd FileType vim highlight vimIsCommand guifg=#537A74
-	"autocmd FileType vim highlight vimAutoCmdSfxList guifg=#537A74
-	"autocmd FileType vim highlight vimOper guifg=#000000
-	"autocmd FileType vim highlight vimHiGroup guifg=#000000
-	if has('win32')
-		if &g:background ==# 'dark'
-			colorscheme twilight
-		else
-			colorscheme simpleandfriendly
-		endif
+if has('gui') && has('win32')
+	set guifont=Source_Code_Pro:h14:cANSI:qDRAFT
+	set background=dark
+	if &g:background ==# 'dark'
+		colorscheme blame
+	else
+		colorscheme simpleandfriendly
 	endif
 endif
 " }}}
-"""" Imported {{{
-"" Show syntax highlighting groups for word under cursor {{{
-" Mapping {{{
-nmap <C-S-P> :call <SID>SynStack()<CR>
-" }}}
-" Function {{{
-function! <SID>SynStack()
-  if !exists("*synstack")
-    return
-  endif
-  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunc
-" }}}
-"" }}}
-"" Fugitive {{{
-let g:fugitive_git_command='C:\Git\bin\git.exe'
-"" }} 
-
-"" }}}
-""" Filetype Specific {{{
-"" python {{{
-" autocompletion {{{
-let g:pydiction_location = $HOME."/vimfiles/autocomplete/dictionary/python"
-augroup pydiction
-" https://github.com/rkulla/pydiction
-	autocmd!
-	autocmd FileType python :source $HOME/vimfiles/autocomplete/python.vim
-augroup END
-" }}}
-"" }}}
-"" cpp {{{
-" syntax highlighting {{{
-augroup cpp_syntax_highlighting
-	autocmd!
-	autocmd FileType cpp let g:cpp_member_variables_highlight=1
-	autocmd FileType cpp let g:cpp_class_scope_highlight=1
-	autocmd FileType cpp let g:cpp_class_decl_highlight=1
-augroup END
-" auto
-" }}}
-" autocompletion
-augroup tags_cpp
-	autocmd FileType cpp setlocal tags+=$HOME/vimfiles/autocomplete/tags/cpp
-augroup END
-"" }}}
-""" }}}
-"""" }}}
+" vim: set foldmethod=marker foldlevelstart=0
