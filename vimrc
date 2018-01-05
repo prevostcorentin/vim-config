@@ -32,7 +32,7 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 Plug 'mhinz/vim-startify'
 " }}}
 " Colorschemes {{{
-Plug 'hauleth/blame.vim'
+Plug 'tyrannicaltoucan/vim-deep-space'
 " }}}
 "" }}}
 "" Javascript {{{
@@ -452,9 +452,11 @@ augroup end
 " Look {{{
 if has('gui') && has('win32')
 	set guifont=Source_Code_Pro:h14:cANSI:qDRAFT
-	set background=dark
+endif
+set background=dark
+if has('gui')
 	if &g:background ==# 'dark'
-		colorscheme blame
+		colorscheme deep-space
 	else
 		colorscheme simpleandfriendly
 	endif
