@@ -1,6 +1,10 @@
 """" Imported {{{
 """ Plugins {{{
 call plug#begin() " {{{
+" Status Line {{{
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+" }}}
 " Git {{{
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
