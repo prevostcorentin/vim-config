@@ -37,6 +37,7 @@ Plug 'mhinz/vim-startify'
 " }}}
 " Colorschemes {{{
 Plug 'tyrannicaltoucan/vim-deep-space'
+Plug 'NLKNguyen/papercolor-theme'
 " }}}
 "" }}}
 "" Javascript {{{
@@ -456,18 +457,12 @@ augroup end
 " Look {{{
 if has('gui')
 	if has('win32')
-		set guifont=Source_Code_Pro:h14:cANSI:qDRAFT
+		set guifont=Lucida_Console:h14:cANSI:qDRAFT
 	else
 		set guifont=Monospace
 	endif
 endif
-set background=dark
-if has('gui')
-	if &g:background ==# 'dark'
-		colorscheme deep-space
-	else
-		colorscheme simpleandfriendly
-	endif
-endif
+set background=light
+colorscheme PaperColor
 " }}}
 " vim: set foldmethod=marker foldlevelstart=0
