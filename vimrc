@@ -37,6 +37,7 @@ Plug 'mhinz/vim-startify'
 " }}}
 " Colorschemes {{{
 Plug 'tyrannicaltoucan/vim-deep-space'
+Plug 'NLKNguyen/papercolor-theme'
 " }}}
 "" }}}
 "" Javascript {{{
