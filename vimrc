@@ -123,16 +123,17 @@ end
 syntax on
 " modern using of backspace in insert mode
 set backspace=indent,eol,start
-" line numbering
-set relativenumber numberwidth=4
+" relative line number with true line count for cursor position
+set relativenumber numberwidth=4 number
 " history size
-set history=100
+set history=1000
 " always show status line
 set laststatus=2
 " don't wrap lines
 set nowrap
 " display tabs and trailing spaces
-set listchars=tab:▸·,trail:•
+set listchars=eol:▼,tab:➤\ ,trail:•
+set list
 
 if has('win32')
 	set fileformats=unix,dos
@@ -150,27 +151,22 @@ if !has('gui')
 	set mouse=a
 endif
 " }}}
-" auto commands {{{
-augroup number_when_inserting
-	autocmd!
-	autocmd InsertEnter setlocal norelativenumber number
-	autocmd InsertLeave setlocal relativenumber nonumber
-augroup END
-" }}}
 "" }}}
 "" Filetype specific {{{
 filetype plugin on
 " conf {{{
 augroup filetype_conf
-	autocmd FileType conf setlocal foldmethod=marker
+	autocmd!
+	autocmd FileType conf setlocal foldmethod=indent
 	autocmd FileType conf setlocal foldlevelstart=0
 	autocmd FileType conf setlocal autoindent
 	autocmd FileType conf setlocal tabstop=4 shiftwidth=4
+	autocmd FileType conf setlocal filetype=yaml
 " }}}
 " cpp {{{
 augroup filetype_cpp
 	autocmd!
-	autocmd FileType cpp setlocal listchars=tab:─┼,trail:•
+	autocmd FileType cpp setlocal listchars=tab:╬═,trail:•
 	autocmd FileType cpp setlocal list
 	autocmd FileType cpp setlocal nowrap
 	autocmd FileType cpp setlocal cindent
@@ -182,10 +178,25 @@ augroup filetype_cpp
 augroup END
 " }}}
 " html {{{
-augroup filetype_html
+augroup filetype_html_php
 	autocmd!
-	autocmd BufNewFile, BufRead *.html setlocal nowrap
-	autocmd BufWritePre *.html :normal gg=G
+	autocmd FileType html,php setlocal tabstop=2 shiftwidth=2
+	autocmd FileType html,php setlocal nowrap
+	autocmd FileType html,php setlocal cindent
+	autocmd FileType html,php setlocal foldmethod=indent
+	autocmd FileType html,php setlocal foldlevelstart=0
+augroup END
+" }}}
+" linux scripts {{{
+augroup linux_scripts
+	autocmd!
+	autocmd FileType zsh,bash,csh,sh setlocal tabstop=2 shiftwidth=2 noexpandtab
+augroup END
+" }}}
+" makefile {{{
+augroup filetype_makefile
+	autocmd!
+	autocmd Filetype make setlocal tabstop=2 shiftwidth=2
 augroup END
 " }}}
 " markdown {{{
@@ -221,32 +232,12 @@ augroup filetype_vim
 	autocmd FileType vim setlocal tabstop=2 shiftwidth=2
 augroup END
 " }}}
-" vue
+" vue {{{
 augroup filetype_vue
-	autocmd FileType *.vue setlocal filetype=html
+	autocmd!
 	autocmd FileType *.vue setlocal nowrap
 	autocmd FileType *.vue setlocal tabstop=2 shiftwidth=2 expandtab
 	autocmd FileType *.vue setlocal list
-augroup END
-" html, php
-augroup filetype_html
-	autocmd!
-	autocmd FileType html,php setlocal tabstop=2 shiftwidth=2
-	autocmd FileType html,php setlocal nowrap
-	autocmd FileType html,php setlocal cindent
-	autocmd FileType html,php setlocal foldmethod=indent
-	autocmd FileType html,php setlocal foldlevelstart=0
-augroup END
-" make {{{
-augroup filetype_make
-	autocmd!
-	autocmd Filetype make setlocal tabstop=2 shiftwidth=2
-augroup END
-" }}}
-" linux scripts {{{
-augroup linux_scripts
-	autocmd!
-	autocmd FileType zsh,bash setlocal tabstop=2 shiftwidth=2 noexpandtab
 augroup END
 " }}}
 "" }}}
@@ -271,57 +262,36 @@ noremap <Up> <nop>
 noremap <Down> <nop>
 " }}}
 """ Normal {{{
-"" create splits {{{
-" $MYVIMRC {{{
+"" splits {{{
+" create viewports {{{
 " horizontal
-nnoremap <C-s>jv :execute "rightbelow new ".$MYVIMRC<CR>
-nnoremap <C-s>kv :execute "leftabove new ".$MYVIMRC<CR>
+nnoremap <C-s>l :execute "rightbelow vnew"<CR>
+nnoremap <C-s>h :execute "leftabove vnew"<CR>
 " vertical
-nnoremap <C-s>lv :execute "rightbelow vnew ".$MYVIMRC<CR>
-nnoremap <C-s>hv :execute "leftabove vnew ".$MYVIMRC<CR>
-" }}}
-" new buffer {{{
-" horizontal
-nnoremap <C-s>ln :execute "rightbelow vnew"<CR>
-nnoremap <C-s>hn :execute "leftabove vnew"<CR>
-" vertical
-nnoremap <C-s>jn :execute "rightbelow new"<CR>
-nnoremap <C-s>kn :execute "leftabove new"<CR>
-" }}}
-"" }}}
-" navigate through buffers
-nnoremap <F5> :buffers<cr>:buffer
-" move through splits
+nnoremap <C-s>j :execute "rightbelow new"<CR>
+nnoremap <C-s>k :execute "leftabove new"<CR>
+" move with <Ctrl-[vim move]>
 nnoremap <C-k> <C-w>k
 nnoremap <C-j> <C-w>j
 nnoremap <C-l> <C-w>l
 nnoremap <C-h> <C-w>h
-" undo 2 changes one at a time
-nnoremap <leader>d "1dd"2dd:let @"=@1<CR>
-" source file
-nnoremap <leader>x :source 
-" edit a file
-nnoremap <leader>o :e 
-" Shortcuts to vimrc file
-nnoremap <leader>xv :source $HOME\vimfiles\vimrc<CR><LF>
+" }}}
+"" }}}
+" buffers {{{
+" select in a list
+nnoremap <F5> :buffers<cr>:buffer 
+" previous in current viewport
+nnoremap <F1> :bprev<cr>
+" next in current viewport
+nnoremap <F2> :bnext<cr>
+" }}}
 " go to end of line with Shift-l
 nnoremap L $
 " go to beginning of line with Shift-h
 nnoremap H 0
 " save
 nnoremap ! :w<CR>
-" delete line
-nnoremap \ dd
 """ }}}
-" Visual  {{{
-vnoremap <space> e
-" exit visual mode
-vnoremap jk <Esc>
-" capitalize
-vnoremap \ U
-" add quotes around selection
-vnoremap <leader>' <esc>a'<esc>v`<<esc>i'<esc>v
-" }}}
 " Insert {{{
 " delete current line without leaving mode
 inoremap <C-d> <esc>ddi
@@ -333,142 +303,20 @@ inoremap <C-j> <esc>ddpi
 inoremap <C-k> <esc>kddpki
 " exit
 inoremap jk <esc>
-" unmap default exit
-inoremap <esc> <nop>
+inoremap Jk <esc>
+inoremap jK <esc>
+inoremap JK <esc>
 " }}}
-" Pending  {{{
-onoremap p i(
-onoremap b /return<cr>
-" Parentheses {{{
-" Inside next
-onoremap in( :<C-u>normal! f(vi(<cr>
-" Inside last
-onoremap il( :<C-u>normal! F)vi(<cr>
-" Around next
-onoremap an( :<C-u>normal! f(va(<cr>
-" Around last
-onoremap al( :<C-u>normal! F)va(<cr>
-" }}}
-" Curly braces {{{
-" Inside next
-onoremap in{ :<C-u>normal! f{vi{<cr>
-" Inside last
-onoremap il{ :<C-u>normal! F}vi{<cr>
-" Around next
-onoremap an{ :<C-u>normal! f{va{<cr>
-" Around last
-onoremap al{ :<C-u>normal! F}va}<cr>
-" }}}
-" }}}
-"" Filetype specific {{{
-let maplocalleader=';'
-" help {{{
-augroup filetype_help_mappings
-	autocmd!
-	autocmd Filetype help nnoremap <buffer> <localleader>n :cnext<CR>
-	autocmd Filetype help nnoremap <buffer> <localleader>N :cprev<CR>
-augroup END
-" }}}
-" markdown {{{
-augroup filetype_markdown_mappings
-	autocmd!
-	" Inside header block delimited by =
-	autocmd FileType markdown onoremap <buffer> ih1 :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rkvg_"<cr>
-	" Around header block delimited by =
-	autocmd FileType markdown onoremap <buffer> ah1 :<c-u>execute "normal! ?^==\\+$\r:nohlsearch\rg_vk0"<cr>
-	" Inside subheader block delimited by -
-	autocmd FileType markdown onoremap <buffer> ih2 :<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rkvg_"<cr>
-	" Around header block delimited by -
-	autocmd FileType markdown onoremap <buffer> ah1 :<c-u>execute "normal! ?^--\\+$\r:nohlsearch\rg_vk0"<cr>
-augroup END
-" }}}
-" vim {{{
-augroup filetype_vim_mappings
-	autocmd!
-	autocmd FileType vim inoremap <buffer> fun~ function ()<Return>endfunction:normal k
-augroup END
-" }}}
-" python {{{
-augroup filetype_python_mappings
-	autocmd!
-	" Comment line
-	autocmd FileType python nnoremap <buffer> <localleader>c I#<space>:normal
-	autocmd FileType python inoremap <buffer> def<C-k> if :<esc>hi
-	" PEP 8 tabs
-augroup END
-" }}}
-" cpp {{{
-augroup filetype_cpp_mappings
-	autocmd!
-	autocmd FileType cpp setlocal listchars=tab:╬═,trail:•
-	autocmd FileType cpp nnoremap <buffer> <localleader>c I//<space>:normal
-	autocmd FileType cpp nnoremap <buffer> <localleader>;l :execute "normal! mqA;\<esc>`q"
-augroup END
-" }}}
-"" }}}
 """" }}}
-""" Statusline {{{
-" absolute filename
-set statusline=%-50F
-" filetype
-set statusline+=%-25.15y
-" current percentage for cursor position in whole file
-set statusline+=%25p%%
-" current line for cursor position in whole file
-set statusline+=%54l
-set statusline+=/
-" line number in whole file
-set statusline+=%4L
-"" Filetype specific {{{
-" cpp {{{
-augroup statusline_cpp_filetype
-	autocmd!
-	" Only filename
-	autocmd FileType cpp setlocal statusline=%-30t
-	autocmd FileType cpp setlocal statusline+=%3m
-	" Byte hexadecimal value of current character
-	autocmd FileType cpp setlocal statusline+=%3r
-	autocmd FileType cpp setlocal statusline+=\   
-	autocmd FileType cpp setlocal statusline+=\{%B
-	autocmd FileType cpp setlocal statusline+=:
-	" Byte decimal value of current character
-	autocmd FileType cpp setlocal statusline+=%b\}
-	autocmd FileType cpp setlocal statusline+=\ 
-	autocmd FileType cpp setlocal statusline+=[%l
-	autocmd FileType cpp setlocal statusline+=/
-	autocmd FileType cpp setlocal statusline+=%L]
-augroup END
-" }}}
-"" }}}
-""" }}}
-""" Abbreviations {{{
-"" Filetype Specific
-" vim {{{
-augroup filetype_vim_abbrev
-  autocmd!
-augroup end
-" }}}
-" python {{{
-augroup filetype_python_abbrev
-  autocmd!
-augroup end
-" }}}
-"" }}}
 " Look {{{
 if has('gui')
 	if has('win32')
-		set guifont=Source_Code_Pro:h14:cANSI:qDRAFT
+		set guifont=Lucida_Console:h14:cANSI:qDRAFT
 	else
 		set guifont=Monospace
 	endif
 endif
-set background=dark
-if has('gui')
-	if &g:background ==# 'dark'
-		colorscheme deep-space
-	else
-		colorscheme simpleandfriendly
-	endif
-endif
+set background=light
+colorscheme PaperColor
 " }}}
 " vim: set foldmethod=marker foldlevelstart=0
