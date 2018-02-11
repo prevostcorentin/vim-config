@@ -260,6 +260,12 @@ noremap <Left> <nop>
 noremap <Right> <nop>
 noremap <Up> <nop>
 noremap <Down> <nop>
+
+noremap <C-i> :vertical resize +5<cr><lf>
+noremap <C-o> :vertical resize -5<cr><lf>
+noremap <C-d> :resize +5<cr><lf>
+noremap <C-c> :resize -5<cr><lf>
+
 " }}}
 """ Normal {{{
 "" splits {{{
