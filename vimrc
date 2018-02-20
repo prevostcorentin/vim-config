@@ -45,7 +45,8 @@ Plug 'NLKNguyen/papercolor-theme'
 Plug 'posva/vim-vue'
 " }}}
 "" }}}
-call plug#end()   " }}}
+call plug#end()
+" }}}
 "" Settings {{{
 " vim-cpp-enhanced-highlight {{{
 let g:cpp_class_scope_highlight = 1
@@ -53,7 +54,7 @@ let g:cpp_class_decl_highlight = 1
 let g:cpp_class_scope_highlight = 1
 " }}}
 " Fugitive {{{
-let g:fugitive_git_command='git'
+let g:fugitive_git_command = 'git'
 " }}}
 " python-syntax {{{
 let g:python_highlight_all = 1
@@ -269,6 +270,8 @@ noremap <C-o> :vertical resize +5<cr><lf>
 noremap <C-i> :vertical resize -5<cr><lf>
 noremap <C-d> :resize +5<cr><lf>
 noremap <C-c> :resize -5<cr><lf>
+
+noremap <C-A> :Project
 
 " Fold all
 noremap <leader>K :set foldlevel=0<cr><lf>
