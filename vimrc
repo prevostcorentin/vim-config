@@ -317,7 +317,7 @@ inoremap JK <esc>
 " Look {{{
 if has('gui')
   if has('win32')
-    set guifont=Lucida_Console:h14:cANSI:qDRAFT
+    set guifont=Lucida_Console:h11:cANSI:qDRAFT
   else
     set guifont=Monospace
   endif
