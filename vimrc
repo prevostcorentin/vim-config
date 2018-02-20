@@ -94,6 +94,9 @@ else
   let $VIM_DIR = ".vim"
 endif
 let $MYVIM_DIR = $HOME."/".$VIM_DIR
+" There is a local configuration directory.
+" It is ignored on the repository
+let $MY_LOCAL_VIM_DIR = $MYVIM_DIR."/local"
 let $MYVIMRC = $MYVIM_DIR."/vimrc"
 " enable plugins
 "set runtimepath+=$HOME/vimfiles/plugin
@@ -330,5 +333,12 @@ if has('gui')
 endif
 set background=light
 colorscheme PaperColor
+
+let $MY_LOCAL_LOOK_FILE = $MY_LOCAL_VIM_DIR."/look.vim"
+
+if filereadable($MY_LOCAL_LOOK_FILE)
+	source $MY_LOCAL_LOOK_FILE
+endif
+
 " }}}
-" vim: set foldmethod=marker foldlevelstart=0
+" vim: set ts=2 sw=2 noet fdm=marker fdl=0
