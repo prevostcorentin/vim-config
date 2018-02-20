@@ -244,6 +244,7 @@ augroup END
 """ }}}
 """" Mappings {{{
 let mapleader = ','
+let localmapleader = ';'
 
 if has('win32')
   let $MYVIMDIR = $HOME.'\vimfiles\'
@@ -265,6 +266,11 @@ noremap <C-o> :vertical resize +5<cr><lf>
 noremap <C-i> :vertical resize -5<cr><lf>
 noremap <C-d> :resize +5<cr><lf>
 noremap <C-c> :resize -5<cr><lf>
+
+" Fold all
+noremap <leader>K :set foldlevel=0<cr><lf>
+" Unfold all
+noremap <leader>k :set foldlevel=50<cr><lf>
 
 " }}}
 """ Normal {{{
