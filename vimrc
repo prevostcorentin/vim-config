@@ -325,14 +325,17 @@ inoremap JK <esc>
 """" }}}
 " Look {{{
 if has('gui')
+	colorscheme PaperColor
+	set background=light
   if has('win32')
     set guifont=Lucida_Console:h11:cANSI:qDRAFT
   else
     set guifont=Monospace
   endif
+else
+	colorscheme default
+	set background=light
 endif
-set background=light
-colorscheme PaperColor
 
 let $MY_LOCAL_LOOK_FILE = $MY_LOCAL_VIM_DIR."/look.vim"
 
