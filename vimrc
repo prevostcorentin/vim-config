@@ -235,9 +235,9 @@ augroup END
 " vue {{{
 augroup filetype_vue
 	autocmd!
-	autocmd FileType *.vue setlocal nowrap
-	autocmd FileType *.vue setlocal tabstop=2 shiftwidth=2 expandtab
-	autocmd FileType *.vue setlocal list
+	autocmd FileType vue,javascript setlocal nowrap
+	autocmd FileType vue,javascript setlocal tabstop=2 shiftwidth=2 expandtab
+	autocmd FileType vue,javascript setlocal list
 augroup END
 " }}}
 "" }}}
@@ -313,7 +313,7 @@ if has('gui')
 	if has('win32')
 		set guifont=Lucida_Console:h14:cANSI:qDRAFT
 	else
-		set guifont=Monospace
+		set guifont=Monospace\ 10
 	endif
 endif
 set background=light
