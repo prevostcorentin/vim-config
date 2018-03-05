@@ -77,8 +77,8 @@ endfunc
 "" C/C++ {{{
 " autocompletion
 augroup autocompletion_cpp
-	autocmd BufNewFile,BufRead,BufEnter *.cpp,*.hpp,*.h,*.c setlocal omnifunc=omni#cpp#complete#Main
-	autocmd FileType cpp setlocal tags+=$HOME/vimfiles/autocomplete/tags/cpp
+  autocmd BufNewFile,BufRead,BufEnter *.cpp,*.hpp,*.h,*.c setlocal omnifunc=omni#cpp#complete#Main
+  autocmd FileType cpp setlocal tags+=$HOME/vimfiles/autocomplete/tags/cpp
 augroup END
 "" }}}
 """ }}}
@@ -89,11 +89,14 @@ augroup END
 set nocompatible
 " Vim config paths {{{
 if has('win32')
-	let $VIM_DIR = "vimfiles"
+  let $VIM_DIR = "vimfiles"
 else
-	let $VIM_DIR = ".vim"
+  let $VIM_DIR = ".vim"
 endif
 let $MYVIM_DIR = $HOME."/".$VIM_DIR
+" There is a local configuration directory.
+" It is ignored on the repository
+let $MY_LOCAL_VIM_DIR = $MYVIM_DIR."/local"
 let $MYVIMRC = $MYVIM_DIR."/vimrc"
 " enable plugins
 "set runtimepath+=$HOME/vimfiles/plugin
@@ -114,9 +117,9 @@ set hlsearch
 " }}}
 " File encoding {{{
 if has("multi_byte")
-	set encoding=utf-8
-	setglobal fileencoding=utf-8
-	set fileencodings=utf-8,latin1
+  set encoding=utf-8
+  setglobal fileencoding=utf-8
+  set fileencodings=utf-8,latin1
 end
 " }}}
 " enable syntax
@@ -136,19 +139,19 @@ set listchars=eol:▼,tab:➤\ ,trail:•
 set list
 
 if has('win32')
-	set fileformats=unix,dos
+  set fileformats=unix,dos
 endif
 
 " GUI Specific {{{
 if has('gui')
 " no menu, sidebar etc...
-	set guioptions=
+  set guioptions=
 endif
 " }}}
 " Terminal Specific {{{
 if !has('gui')
-	" enable full mouse support
-	set mouse=a
+  " enable full mouse support
+  set mouse=a
 endif
 " }}}
 "" }}}
@@ -156,80 +159,80 @@ endif
 filetype plugin on
 " conf {{{
 augroup filetype_conf
-	autocmd!
-	autocmd FileType conf setlocal foldmethod=indent
-	autocmd FileType conf setlocal foldlevelstart=0
-	autocmd FileType conf setlocal autoindent
-	autocmd FileType conf setlocal tabstop=4 shiftwidth=4
-	autocmd FileType conf setlocal filetype=yaml
+  autocmd!
+  autocmd FileType conf setlocal foldmethod=indent
+  autocmd FileType conf setlocal foldlevelstart=0
+  autocmd FileType conf setlocal autoindent
+  autocmd FileType conf setlocal tabstop=4 shiftwidth=4
+  autocmd FileType conf setlocal filetype=yaml
 " }}}
 " cpp {{{
 augroup filetype_cpp
-	autocmd!
-	autocmd FileType cpp setlocal listchars=tab:╬═,trail:•
-	autocmd FileType cpp setlocal list
-	autocmd FileType cpp setlocal nowrap
-	autocmd FileType cpp setlocal cindent
-	autocmd FileType cpp setlocal smarttab
-	autocmd FileType cpp setlocal foldmethod=indent
-	autocmd FileType cpp setlocal foldlevelstart=0
-	" insert tabs and display it as 3 spaces wide
-	autocmd FileType cpp setlocal tabstop=3 shiftwidth=3 noexpandtab
+  autocmd!
+  autocmd FileType cpp setlocal listchars=tab:╬═,trail:•
+  autocmd FileType cpp setlocal list
+  autocmd FileType cpp setlocal nowrap
+  autocmd FileType cpp setlocal cindent
+  autocmd FileType cpp setlocal smarttab
+  autocmd FileType cpp setlocal foldmethod=indent
+  autocmd FileType cpp setlocal foldlevelstart=0
+  " insert tabs and display it as 3 spaces wide
+  autocmd FileType cpp setlocal tabstop=3 shiftwidth=3 noexpandtab
 augroup END
 " }}}
 " html {{{
 augroup filetype_html_php
-	autocmd!
-	autocmd FileType html,php setlocal tabstop=2 shiftwidth=2
-	autocmd FileType html,php setlocal nowrap
-	autocmd FileType html,php setlocal cindent
-	autocmd FileType html,php setlocal foldmethod=indent
-	autocmd FileType html,php setlocal foldlevelstart=0
+  autocmd!
+  autocmd FileType html,php setlocal tabstop=2 shiftwidth=2
+  autocmd FileType html,php setlocal nowrap
+  autocmd FileType html,php setlocal cindent
+  autocmd FileType html,php setlocal foldmethod=indent
+  autocmd FileType html,php setlocal foldlevelstart=0
 augroup END
 " }}}
 " linux scripts {{{
 augroup linux_scripts
-	autocmd!
-	autocmd FileType zsh,bash,csh,sh setlocal tabstop=2 shiftwidth=2 noexpandtab
+  autocmd!
+  autocmd FileType zsh,bash,csh,sh setlocal tabstop=2 shiftwidth=2 noexpandtab
 augroup END
 " }}}
 " makefile {{{
 augroup filetype_makefile
-	autocmd!
-	autocmd Filetype make setlocal tabstop=2 shiftwidth=2
+  autocmd!
+  autocmd Filetype make setlocal tabstop=2 shiftwidth=2
 augroup END
 " }}}
 " markdown {{{
 augroup filetype_markdown
-	autocmd!
-	autocmd Filetype vim setlocal list
-	autocmd BufNewFile *.txt :write
+  autocmd!
+  autocmd Filetype vim setlocal list
+  autocmd BufNewFile *.txt :write
 augroup END
 " }}}
 " python {{{
 augroup filetype_python
-	autocmd!
-	" tabs are trailing spaces are displayed
-	autocmd FileType python setlocal nolist
-	autocmd FileType python setlocal tabstop=4 shiftwidth=4 expandtab
-	autocmd FileType python setlocal textwidth=81 wrapmargin=0 colorcolumn=81
-	autocmd FileType python setlocal foldmethod=indent foldlevelstart=0
-	autocmd FileType python setlocal nowrap 
-	autocmd FileType python setlocal cindent
-	autocmd FileType python :iabbrev <buffer> iff if:<left>
+  autocmd!
+  " tabs are trailing spaces are displayed
+  autocmd FileType python setlocal nolist
+  autocmd FileType python setlocal tabstop=4 shiftwidth=4 expandtab
+  autocmd FileType python setlocal textwidth=81 wrapmargin=0 colorcolumn=81
+  autocmd FileType python setlocal foldmethod=indent foldlevelstart=0
+  autocmd FileType python setlocal nowrap
+  autocmd FileType python setlocal cindent
+  autocmd FileType python :iabbrev <buffer> iff if:<left>
 augroup END
 " }}}
 " vim {{{
 augroup filetype_vim
-	autocmd! 
-	autocmd Filetype vim setlocal nolist
-	autocmd Filetype vim setlocal textwidth=90
-	autocmd FileType vim setlocal nowrap
-	autocmd FileType vim setlocal foldmethod=marker
-	" Fold every fold at opening
-	autocmd FileType vim setlocal foldlevelstart=0
-	autocmd FileType vim setlocal autoindent
-	autocmd FileType vim setlocal tabstop=2 shiftwidth=2
+  autocmd!
+  autocmd Filetype vim setlocal nolist
+  autocmd Filetype vim setlocal textwidth=90
+  autocmd FileType vim setlocal nowrap
+  autocmd FileType vim setlocal foldmethod=marker
+  " Fold every fold at opening
+  autocmd FileType vim setlocal foldlevelstart=0
+  autocmd FileType vim setlocal autoindent
+  autocmd FileType vim setlocal tabstop=2 shiftwidth=2
 augroup END
 " }}}
 " vue {{{
@@ -244,11 +247,12 @@ augroup END
 """ }}}
 """" Mappings {{{
 let mapleader = ','
+let localmapleader = ';'
 
 if has('win32')
-	let $MYVIMDIR = $HOME.'\vimfiles\'
+  let $MYVIMDIR = $HOME.'\vimfiles\'
 else
-	let $MYVIMDIR = $HOME.'/.vim/'
+  let $MYVIMDIR = $HOME.'/.vim/'
 endif
 
 let $MYVIMRC = $MYVIMDIR.'vimrc'
@@ -260,6 +264,17 @@ noremap <Left> <nop>
 noremap <Right> <nop>
 noremap <Up> <nop>
 noremap <Down> <nop>
+
+noremap <C-o> :vertical resize +5<cr><lf>
+noremap <C-i> :vertical resize -5<cr><lf>
+noremap <C-d> :resize +5<cr><lf>
+noremap <C-c> :resize -5<cr><lf>
+
+" Fold all
+noremap <leader>K :set foldlevel=0<cr><lf>
+" Unfold all
+noremap <leader>k :set foldlevel=50<cr><lf>
+
 " }}}
 """ Normal {{{
 "" splits {{{
@@ -279,7 +294,7 @@ nnoremap <C-h> <C-w>h
 "" }}}
 " buffers {{{
 " select in a list
-nnoremap <F5> :buffers<cr>:buffer 
+nnoremap <F5> :buffers<cr>:buffer
 " previous in current viewport
 nnoremap <F1> :bprev<cr>
 " next in current viewport
@@ -310,13 +325,23 @@ inoremap JK <esc>
 """" }}}
 " Look {{{
 if has('gui')
-	if has('win32')
-		set guifont=Lucida_Console:h14:cANSI:qDRAFT
-	else
-		set guifont=Monospace\ 10
-	endif
+	colorscheme PaperColor
+	set background=light
+  if has('win32')
+    set guifont=Lucida_Console:h11:cANSI:qDRAFT
+  else
+    set guifont=Monospace
+  endif
+else
+	set background=light
+	colorscheme default
 endif
-set background=light
-colorscheme PaperColor
+
+let $MY_LOCAL_LOOK_FILE = $MY_LOCAL_VIM_DIR."/look.vim"
+
+if filereadable($MY_LOCAL_LOOK_FILE)
+	source $MY_LOCAL_LOOK_FILE
+endif
+
 " }}}
-" vim: set foldmethod=marker foldlevelstart=0
+" vim: set ts=2 sw=2 noet fdm=marker fdl=0
