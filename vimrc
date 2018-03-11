@@ -6,25 +6,6 @@ endif
 
 let $MYVIMRC = $MYVIMDIR."/vimrc"
 
-if filereadable($MYVIMDIR."/local/look.vim")
-	source $MY_LOCAL_VIM_DIR."/local/look.vim"
-else
-	if has('gui')
-		"no menu, sidebar etc...
-		set guioptions=
-		colorscheme PaperColor
-		set background=light
-		if has('win32')
-			set guifont=Lucida_Console:h11:cANSI:qDRAFT
-		else
-			set guifont=Monospace
-		endif
-	else
-		set background=light
-		colorscheme default
-	endif
-endif
-
 " don't want Vi
 set nocompatible
 " enable per project configuration
@@ -78,10 +59,10 @@ augroup autocompletion_cpp " {{{
 augroup END " }}}
 "backup files
 set backup
-let &backupdir = $MYVIM_DIR.'/backup'
+let &backupdir = $MYVIMDIR.'/backup'
 "swap files
 set swapfile
-let &directory = $MYVIM_DIR.'/swap'
+let &directory = $MYVIMDIR.'/swap'
 "iterate through search results
 set incsearch
 "highlight matches
@@ -184,6 +165,25 @@ augroup filetype_vue " {{{
 	autocmd FileType vue,javascript setlocal tabstop=2 shiftwidth=2 expandtab
 	autocmd FileType vue,javascript setlocal list
 augroup END " }}}
+
+if filereadable($MYVIMDIR."/local/look.vim")
+	source $MY_LOCAL_VIM_DIR."/local/look.vim"
+else
+	if has('gui')
+		"no menu, sidebar etc...
+		set guioptions=
+		colorscheme PaperColor
+		set background=light
+		if has('win32')
+			set guifont=Lucida_Console:h11:cANSI:qDRAFT
+		else
+			set guifont=Monospace
+		endif
+	else
+		set background=light
+		colorscheme default
+	endif
+endif
 " }}}
 " Mappings {{{
 let mapleader = ','
