@@ -195,8 +195,9 @@ noremap <Left> <nop>
 noremap <Right> <nop>
 noremap <Up> <nop>
 noremap <Down> <nop>
-"fold all
-noremap <leader>K :set foldlevel=0<cr><lf>
+"fold/unfold
+nnoremap <leader>f :set foldlevel=0<cr><lf>
+noremap <leader>k :set foldlevel=50<cr><lf>
 "go to end of line
 nnoremap L $
 "go to beginning of line
@@ -206,14 +207,21 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-j> <C-w>j
 nnoremap <C-l> <C-w>l
 nnoremap <C-h> <C-w>h
+"edit Makefile
+noremap <leader>em :edit Makefile
+"execute make
+nnoremap <leader>m :make
 "navigate through buffers
 nnoremap <F1> :bprev<cr>
 nnoremap <F2> :bnext<cr>
+"navigate through tabs
+nnoremap <leader>k :tabnext<cr>
+nnoremap <leader>j :tabprev<cr>
 "new viewports (split)
-nnoremap <C-s>l :execute "rightbelow vnew"<CR>
-nnoremap <C-s>h :execute "leftabove vnew"<CR>
-nnoremap <C-s>j :execute "rightbelow new"<CR>
-nnoremap <C-s>k :execute "leftabove new"<CR>
+nnoremap <C-s>l :rightbelow vnew<CR>
+nnoremap <C-s>h :leftabove vnew<CR>
+nnoremap <C-s>j :rightbelow new<CR>
+nnoremap <C-s>k :leftabove new<CR>
 "resize viewport
 noremap <C-o> :vertical resize +5<cr><lf>
 noremap <C-i> :vertical resize -5<cr><lf>
@@ -225,8 +233,6 @@ nnoremap ! :w<CR>
 nnoremap <F5> :buffers<cr>:buffer\ 
 "select current word in visual mode
 noremap <space> viw
-"unfold all
-noremap <leader>k :set foldlevel=50<cr><lf>
 "" }}}
 "" Insert mode {{{
 " capitalize current word
