@@ -167,7 +167,7 @@ augroup filetype_vue " {{{
 augroup END " }}}
 
 if filereadable($MYVIMDIR."/local/look.vim")
-	source $MY_LOCAL_VIM_DIR."/local/look.vim"
+	source $MYVIMDIR/local/look.vim
 else
 	if has('gui')
 		"no menu, sidebar etc...
