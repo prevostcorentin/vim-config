@@ -46,7 +46,7 @@ let g:fugitive_git_command='git'
 "python-syntax
 let g:python_highlight_all = 1
 "show syntax highlighting groups for word under cursor
-nmap <C-S-P> :call <SID>SynStack()<CR>
+nmap <C-S-P> :call <SID>SynStack()<cr><lf>
 function! <SID>SynStack()
   if !exists("*synstack")
     return
@@ -82,6 +82,8 @@ set nowrap
 "display tabs and trailing spaces
 set listchars=eol:▼,tab:➤\ ,trail:•
 set list
+"case-insensitive
+set ignorecase
 
 if has("multi_byte")
   set encoding=utf-8
@@ -164,7 +166,16 @@ augroup filetype_vue " {{{
 	autocmd FileType vue,javascript setlocal nowrap
 	autocmd FileType vue,javascript setlocal tabstop=2 shiftwidth=2 expandtab
 	autocmd FileType vue,javascript setlocal list
+	autocmd FileType vue,javascript set filetype=js
 augroup END " }}}
+augroup filetype_yaml " {{{
+  autocmd!
+  autocmd FileType conf setlocal foldmethod=indent
+  autocmd FileType conf setlocal foldlevelstart=0
+  autocmd FileType conf setlocal autoindent
+  autocmd FileType conf setlocal tabstop=4 shiftwidth=4
+  autocmd FileType conf setlocal filetype=yaml
+augroup END "}}}
 
 if filereadable($MYVIMDIR."/local/look.vim")
 	source $MYVIMDIR/local/look.vim
@@ -190,14 +201,9 @@ let mapleader = ','
 let localmapleader = ';'
 
 "" Normal mode {{{
-"disable arrow keys
-noremap <Left> <nop>
-noremap <Right> <nop>
-noremap <Up> <nop>
-noremap <Down> <nop>
 "fold/unfold
 nnoremap <leader>f :set foldlevel=0<cr><lf>
-noremap <leader>k :set foldlevel=50<cr><lf>
+nnoremap <leader><S-f> :set foldlevel=50<cr><lf>
 "go to end of line
 nnoremap L $
 "go to beginning of line
@@ -208,31 +214,33 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-l> <C-w>l
 nnoremap <C-h> <C-w>h
 "edit Makefile
-noremap <leader>em :edit Makefile
+nnoremap <leader>em :edit Makefile
 "execute make
 nnoremap <leader>m :make
 "navigate through buffers
-nnoremap <F1> :bprev<cr>
-nnoremap <F2> :bnext<cr>
+nnoremap <F1> :bprev<cr><lf>
+nnoremap <F2> :bnext<cr><lf>
 "navigate through tabs
-nnoremap <leader>k :tabnext<cr>
-nnoremap <leader>j :tabprev<cr>
+nnoremap <leader>k :tabnext<cr><lf>
+nnoremap <leader>j :tabprev<cr><lf>
 "new viewports (split)
-nnoremap <C-s>l :rightbelow vnew<CR>
-nnoremap <C-s>h :leftabove vnew<CR>
-nnoremap <C-s>j :rightbelow new<CR>
-nnoremap <C-s>k :leftabove new<CR>
+nnoremap <C-s>l :rightbelow vnew<cr><lf>
+nnoremap <C-s>h :leftabove vnew<cr><lf>
+nnoremap <C-s>j :rightbelow new<cr><lf>
+nnoremap <C-s>k :leftabove new<cr><lf>
 "resize viewport
 noremap <C-o> :vertical resize +5<cr><lf>
 noremap <C-i> :vertical resize -5<cr><lf>
 noremap <C-d> :resize +5<cr><lf>
 noremap <C-c> :resize -5<cr><lf>
 "save
-nnoremap ! :w<CR>
+nnoremap ! :w<cr><lf>
 "select buffer
-nnoremap <F5> :buffers<cr>:buffer\ 
+nnoremap <F5> :buffers<cr><lf>:execute "buffer "
 "select current word in visual mode
 noremap <space> viw
+" source vimrc
+nnoremap <leader>v :source $MYVIMRC<cr><lf>
 "" }}}
 "" Insert mode {{{
 " capitalize current word
