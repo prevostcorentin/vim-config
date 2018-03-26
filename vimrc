@@ -234,7 +234,7 @@ noremap <C-i> :vertical resize -5<cr><lf>
 noremap <C-d> :resize +5<cr><lf>
 noremap <C-c> :resize -5<cr><lf>
 "save
-nnoremap ! :w<cr><lf>
+nnoremap ! :w<cr>
 "select buffer
 nnoremap <F5> :buffers<cr><lf>:execute "buffer "
 "select current word in visual mode
