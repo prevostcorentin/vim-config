@@ -236,7 +236,7 @@ noremap <C-c> :resize -5<cr><lf>
 "save
 nnoremap ! :w<cr>
 "select buffer
-nnoremap <F5> :buffers<cr><lf>:execute "buffer "
+nnoremap <F5> :buffers<cr>:buffer 
 "select current word in visual mode
 noremap <space> viw
 " source vimrc
