@@ -37,6 +37,7 @@ Plug 'NLKNguyen/papercolor-theme'
 Plug 'posva/vim-vue'
 call plug#end() " }}}
 " Settings {{{
+set shiftwidth=3 tabstop=3 expandtab
 "vim-cpp-enhanced-highlight
 let g:cpp_class_scope_highlight = 1
 let g:cpp_class_decl_highlight = 1
