@@ -33,6 +33,7 @@ Plug 'mhinz/vim-startify'
 "colorschemes
 Plug 'tyrannicaltoucan/vim-deep-space'
 Plug 'NLKNguyen/papercolor-theme'
+Plug 'dracula/vim'
 "javascript
 Plug 'posva/vim-vue'
 call plug#end() " }}}
