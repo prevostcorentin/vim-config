@@ -34,6 +34,7 @@ Plug 'mhinz/vim-startify'
 Plug 'tyrannicaltoucan/vim-deep-space'
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'dracula/vim'
+Plug 'tomasiser/vim-code-dark'
 "javascript
 Plug 'posva/vim-vue'
 call plug#end() " }}}
@@ -55,6 +56,9 @@ function! <SID>SynStack()
   endif
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
+augroup kiwiconf_colorization " {{{
+  autocmd BufNewFile,BufRead,BufEnter *.conf set filetype=yaml ts=2 sw=2 expandtab
+augroup END" }}}
 augroup autocompletion_cpp " {{{
   autocmd BufNewFile,BufRead,BufEnter *.cpp,*.hpp,*.h,*.c setlocal omnifunc=omni#cpp#complete#Main
   autocmd FileType cpp setlocal tags+=$HOME/vimfiles/autocomplete/tags/cpp
@@ -136,7 +140,7 @@ augroup filetype_makefile " {{{
   autocmd!
   autocmd Filetype make setlocal tabstop=2 shiftwidth=2
 augroup END " }}}
-augroup filetype_markdown " {{{ 
+augroup filetype_markdown " {{{
   autocmd!
   autocmd Filetype vim setlocal list
   autocmd BufNewFile *.txt :write
@@ -185,12 +189,13 @@ else
 	if has('gui')
 		"no menu, sidebar etc...
 		set guioptions=
-		colorscheme PaperColor
-		set background=light
+		set background=dark
+		colorscheme dracula
+    let g:airline_theme = 'dark'
 		if has('win32')
 			set guifont=Lucida_Console:h11:cANSI:qDRAFT
 		else
-			set guifont=Monospace
+			set guifont=Hack,Monospace
 		endif
 	else
 		set background=light
@@ -236,9 +241,9 @@ noremap <C-i> :vertical resize -5<cr><lf>
 noremap <C-d> :resize +5<cr><lf>
 noremap <C-c> :resize -5<cr><lf>
 "save
-nnoremap ! :w<cr>
+nnoremap ! :w<cr>:%s/ \+$//<cr>
 "select buffer
-nnoremap <F5> :buffers<cr>:buffer 
+nnoremap <F5> :buffers<cr>:buffer
 "select current word in visual mode
 noremap <space> viw
 " source vimrc
