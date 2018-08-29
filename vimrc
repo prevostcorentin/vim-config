@@ -188,13 +188,13 @@ if filereadable($MYVIMDIR."/local/look.vim")
 else
 	if has('gui')
 		"no menu, sidebar etc...
-		set guioptions=
-    set background=light
-    colorscheme PaperColor
+    set guioptions=
+    " set background=light
+    " colorscheme PaperColor
     let g:airline_theme = 'papercolor'
-		" set background=dark
-    " colorscheme dracula
-    " let g:airline_theme = 'dark'
+		set background=dark
+    colorscheme dracula
+    let g:airline_theme = 'dark'
 		if has('win32')
 			set guifont=Lucida_Console:h11:cANSI:qDRAFT
 		else
@@ -244,7 +244,7 @@ noremap <C-i> :vertical resize -5<cr>
 noremap <C-d> :resize +5<cr>
 noremap <C-c> :resize -5<cr>
 "save
-nnoremap ! :w<cr>
+nnoremap <silent> ! ma:%s/ \+$//g<cr>w<cr>`a
 "select buffer
 nnoremap <F5> :buffers<cr>:buffer
 "select current word in visual mode
