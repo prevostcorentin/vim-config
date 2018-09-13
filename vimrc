@@ -25,6 +25,7 @@ Plug 'vim-scripts/taglist.vim'
 "python
 Plug 'davidhalter/jedi-vim'
 Plug 'vim-python/python-syntax'
+Plug 'nvie/vim-flake8'
 "C/C++
 Plug 'vim-scripts/OmniCppComplete'
 Plug 'octol/vim-cpp-enhanced-highlight'
