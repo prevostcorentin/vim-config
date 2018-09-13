@@ -34,6 +34,8 @@ Plug 'mhinz/vim-startify'
 "colorschemes
 Plug 'tyrannicaltoucan/vim-deep-space'
 Plug 'NLKNguyen/papercolor-theme'
+Plug 'dracula/vim'
+Plug 'tomasiser/vim-code-dark'
 "javascript
 Plug 'posva/vim-vue'
 call plug#end() " }}}
@@ -48,13 +50,16 @@ let g:fugitive_git_command='git'
 "python-syntax
 let g:python_highlight_all = 1
 "show syntax highlighting groups for word under cursor
-nmap <C-S-P> :call <SID>SynStack()<cr><lf>
+nmap <C-S-P> :call <SID>SynStack()<cr>
 function! <SID>SynStack()
   if !exists("*synstack")
     return
   endif
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
+augroup kiwiconf_colorization " {{{
+  autocmd BufNewFile,BufRead,BufEnter *.conf set filetype=yaml ts=2 sw=2 expandtab
+augroup END" }}}
 augroup autocompletion_cpp " {{{
   autocmd BufNewFile,BufRead,BufEnter *.cpp,*.hpp,*.h,*.c setlocal omnifunc=omni#cpp#complete#Main
   autocmd FileType cpp setlocal tags+=$HOME/vimfiles/autocomplete/tags/cpp
@@ -136,7 +141,7 @@ augroup filetype_makefile " {{{
   autocmd!
   autocmd Filetype make setlocal tabstop=2 shiftwidth=2
 augroup END " }}}
-augroup filetype_markdown " {{{ 
+augroup filetype_markdown " {{{
   autocmd!
   autocmd Filetype vim setlocal list
   autocmd BufNewFile *.txt :write
@@ -184,13 +189,17 @@ if filereadable($MYVIMDIR."/local/look.vim")
 else
 	if has('gui')
 		"no menu, sidebar etc...
-		set guioptions=
-		colorscheme PaperColor
-		set background=light
+    set guioptions=
+    " set background=light
+    " colorscheme PaperColor
+    let g:airline_theme = 'papercolor'
+		set background=dark
+    colorscheme dracula
+    let g:airline_theme = 'dark'
 		if has('win32')
 			set guifont=Lucida_Console:h11:cANSI:qDRAFT
 		else
-			set guifont=Monospace
+			set guifont=Hack,Monospace
 		endif
 	else
 		set background=light
@@ -204,8 +213,8 @@ let localmapleader = ';'
 
 "" Normal mode {{{
 "fold/unfold
-nnoremap <leader>f :set foldlevel=0<cr><lf>
-nnoremap <leader><S-f> :set foldlevel=50<cr><lf>
+nnoremap <leader>f :set foldlevel=0<cr>
+nnoremap <leader><S-f> :set foldlevel=50<cr>
 "go to end of line
 nnoremap L $
 "go to beginning of line
@@ -220,29 +229,33 @@ nnoremap <leader>em :edit Makefile
 "execute make
 nnoremap <leader>m :make
 "navigate through buffers
-nnoremap <F1> :bprev<cr><lf>
-nnoremap <F2> :bnext<cr><lf>
+nnoremap <F1> :bprev<cr>
+nnoremap <F2> :bnext<cr>
 "navigate through tabs
-nnoremap <leader>k :tabnext<cr><lf>
-nnoremap <leader>j :tabprev<cr><lf>
+nnoremap <leader>k :tabnext<cr>
+nnoremap <leader>j :tabprev<cr>
 "new viewports (split)
-nnoremap <C-s>l :rightbelow vnew<cr><lf>
-nnoremap <C-s>h :leftabove vnew<cr><lf>
-nnoremap <C-s>j :rightbelow new<cr><lf>
-nnoremap <C-s>k :leftabove new<cr><lf>
+nnoremap <C-s>l :rightbelow vnew<cr>
+nnoremap <C-s>h :leftabove vnew<cr>
+nnoremap <C-s>j :rightbelow new<cr>
+nnoremap <C-s>k :leftabove new<cr>
 "resize viewport
-noremap <C-o> :vertical resize +5<cr><lf>
-noremap <C-i> :vertical resize -5<cr><lf>
-noremap <C-d> :resize +5<cr><lf>
-noremap <C-c> :resize -5<cr><lf>
+noremap <C-o> :vertical resize +5<cr>
+noremap <C-i> :vertical resize -5<cr>
+noremap <C-d> :resize +5<cr>
+noremap <C-c> :resize -5<cr>
 "save
-nnoremap ! :w<cr>
+nnoremap <silent> ! ma:%s/ \+$//g<cr>w<cr>`a
 "select buffer
-nnoremap <F5> :buffers<cr>:buffer 
+nnoremap <F5> :buffers<cr>:buffer
 "select current word in visual mode
 noremap <space> viw
 " source vimrc
-nnoremap <leader>v :source $MYVIMRC<cr><lf>
+nnoremap <leader>v :source $MYVIMRC<cr>
+" invoke Project
+nnoremap <leader>p :Project<cr>
+" new tab
+nnoremap <leader>t :tabnew
 "" }}}
 "" Insert mode {{{
 " capitalize current word
