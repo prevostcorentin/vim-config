@@ -98,11 +98,11 @@ if has("multi_byte")
   set fileencodings=utf-8,latin1
 end
 
-if has('win32')
-  set fileformats=dos
+if has("win32")
+  set fileformats=dos,unix
 else
-	set fileformats=unix
-endif
+  set fileformats=unix
+end
 
 filetype plugin on
 augroup filetype_conf " {{{
@@ -190,11 +190,11 @@ else
 	if has('gui')
 		"no menu, sidebar etc...
     set guioptions=
-    " set background=light
-    " colorscheme PaperColor
-    let g:airline_theme = 'papercolor'
-		set background=dark
-    colorscheme dracula
+    set background=light
+    colorscheme PaperColor
+    " let g:airline_theme = 'papercolor'
+		" set background=dark
+    " colorscheme dracula
     let g:airline_theme = 'dark'
 		if has('win32')
 			set guifont=Lucida_Console:h11:cANSI:qDRAFT
