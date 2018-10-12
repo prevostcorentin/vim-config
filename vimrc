@@ -255,7 +255,7 @@ nnoremap <leader>v :source $MYVIMRC<cr>
 " invoke Project
 nnoremap <leader>p :Project<cr>
 " new tab
-nnoremap <leader>t :tabnew
+nnoremap <leader>t :tabnew<cr>
 "" }}}
 "" Insert mode {{{
 " capitalize current word
