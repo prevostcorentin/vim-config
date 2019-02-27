@@ -67,6 +67,8 @@ augroup END " }}}
 "backup files
 set backup
 let &backupdir = $MYVIMDIR.'/backup'
+" highlight column
+set cursorcolumn
 "swap files
 set swapfile
 let &directory = $MYVIMDIR.'/swap'
@@ -155,7 +157,7 @@ augroup filetype_python " {{{
   autocmd FileType python setlocal foldmethod=indent foldlevelstart=0
   autocmd FileType python setlocal nowrap
   autocmd FileType python setlocal cindent
-  autocmd FileType python :iabbrev <buffer> iff if:<left>
+  autocmd FileType python :iabbrev <buffer> iff if :<left>
 augroup END " }}}
 augroup filetype_vim " {{{
   autocmd!
@@ -245,7 +247,7 @@ noremap <C-i> :vertical resize -5<cr>
 noremap <C-d> :resize +5<cr>
 noremap <C-c> :resize -5<cr>
 "save
-nnoremap <silent> ! ma:%s/ \+$//g<cr>w<cr>`a
+nnoremap <silent> ! :w<cr>
 "select buffer
 nnoremap <F5> :buffers<cr>:buffer
 "select current word in visual mode
