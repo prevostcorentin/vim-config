@@ -201,7 +201,7 @@ else
 		if has('win32')
 			set guifont=Lucida_Console:h11:cANSI:qDRAFT
 		else
-			set guifont=Hack,Monospace
+			set guifont=Source\ Code\ Pro\ Light\ 12,Hack,Monospace
 		endif
 	else
 		set background=light
