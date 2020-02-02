@@ -142,8 +142,9 @@ augroup filetype_csharp " {{{
   autocmd FileType cs setlocal foldmethod=indent
   autocmd FileType cs setlocal foldlevelstart=0
   autocmd FileType cs let g:OmniSharp_server_stdio=1
+
   " insert tabs and display it as 4 spaces wide
-  autocmd FileType cs setlocal tabstop=4 shiftwidth=4 expandtab
+  autocmd FileType cs setlocal tabstop=4 shiftwidth=4 noexpandtab
 augroup END " }}}
 augroup filetype_html_php " {{{
   autocmd!
