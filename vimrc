@@ -29,6 +29,9 @@ Plug 'nvie/vim-flake8'
 "C/C++
 Plug 'vim-scripts/OmniCppComplete'
 Plug 'octol/vim-cpp-enhanced-highlight'
+"C#
+Plug 'OmniSharp/omnisharp-vim'
+Plug 'prabirshrestha/asyncomplete.vim'
 "misc
 Plug 'mhinz/vim-startify'
 "colorschemes
@@ -38,6 +41,8 @@ Plug 'dracula/vim'
 Plug 'tomasiser/vim-code-dark'
 "javascript
 Plug 'posva/vim-vue'
+"navigation
+Plug 'preservim/nerdtree'
 call plug#end() " }}}
 " Settings {{{
 set shiftwidth=3 tabstop=3 expandtab
@@ -126,6 +131,19 @@ augroup filetype_cpp " {{{
   autocmd FileType cpp setlocal foldlevelstart=0
   " insert tabs and display it as 3 spaces wide
   autocmd FileType cpp setlocal tabstop=3 shiftwidth=3 noexpandtab
+augroup END " }}}
+augroup filetype_csharp " {{{
+  autocmd!
+  autocmd FileType cs setlocal listchars=tab:╬═,trail:•
+  autocmd FileType cs setlocal list
+  autocmd FileType cs setlocal nowrap
+  autocmd FileType cs setlocal cindent
+  autocmd FileType cs setlocal smarttab
+  autocmd FileType cs setlocal foldmethod=indent
+  autocmd FileType cs setlocal foldlevelstart=0
+  autocmd FileType cs let g:OmniSharp_server_stdio=1
+  " insert tabs and display it as 4 spaces wide
+  autocmd FileType cs setlocal tabstop=4 shiftwidth=4 expandtab
 augroup END " }}}
 augroup filetype_html_php " {{{
   autocmd!
