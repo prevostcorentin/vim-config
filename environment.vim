@@ -44,6 +44,9 @@ let $MYLOOKFILE = $MYDATADIR.'/look.vim'
 let $MYSCRIPTSDIR = $MYVIMDIR.'/vimrc.d'
 " }}}
 "
-" Modifying runtime to add custom scripts {{{
+" Modifying runtime to add custom scripts
 set runtimepath+=$MYSCRIPTSDIR
-" }}}
+" Create temporary directory
+if !isdirectory($MYTMPDIR)
+  call mkdir($MYTMPDIR)
+endif
