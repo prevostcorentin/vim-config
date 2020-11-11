@@ -47,7 +47,7 @@ set nowrap
 " }}}
 " Whitespaces {{{
   " Characters for whitespaces {{{
-  set listchars=eo▼,tab:➤\ ,trail:•
+  set listchars=eol:▼,tab:➤\ ,trail:•
   set list " Replaces whitespaces 
   " }}}
 " }}}
