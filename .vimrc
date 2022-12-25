@@ -1,6 +1,7 @@
 runtime environment.vim
 
-runtime plugins/init.vim
-runtime settings/init.vim
-runtime mappings/init.vim
-runtime ui/init.vim
+runtime plugins.vim
+runtime settings.vim
+runtime filetypes.vim
+runtime mappings.vim
+runtime ui.vim
