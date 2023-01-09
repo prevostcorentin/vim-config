@@ -1,1 +1,0 @@
-:GuiRenderLigatures 1

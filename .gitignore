@@ -1,6 +1,6 @@
-.netrwhist
-backup/*
-swap/*
-plugged/
-local/
-
+plugin
+custom
+spell
+ftplugin
+coc-settings.json
+.luarc.json
