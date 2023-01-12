@@ -69,9 +69,9 @@ lspconfig.ansiblels.setup({
     ansible = {
       path = "ansible"
     },
-    -- executionEnvironment = {
-    --   enabled = false
-    -- },
+    executionEnvironment = {
+       enabled = false
+    },
     python = {
       interpreterPath = "python"
     },
